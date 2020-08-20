@@ -74,4 +74,5 @@ $mod_strings = array (
   'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
   'LBL_BORD_OPPORTUNITIES_SUBPANEL_TITLE' => 'OPPORTUNITIES',
   'LBL_NEW_FORM_TITLE' => 'New OPPORTUNITIES',
+  'LNK_SETTINGS' => 'Settings',
 );
