@@ -74,5 +74,12 @@ class BORD_OPPORTUNITIES extends Basic
 
         return false;
     }
+    /**
+     * @return JSON Sales Stage from Opportunities
+     */
+    public function getStages(){
+        global $app_list_strings;
+        return json_encode($app_list_strings['sales_stage_dom']);
+    }
 	
 }

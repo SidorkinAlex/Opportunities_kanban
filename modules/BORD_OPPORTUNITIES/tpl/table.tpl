@@ -8,14 +8,42 @@
 <button id="removeBoard">Remove "Done" Board</button>
 <br />
 <button id="removeElement">Remove "My Task Test"</button>
-{literal}
 <script>
+
+    var stages={$STAGES};
+    {literal}
+    var bordsData=[];
+var counter=0;
+    for (var key in stages) {
+
+        bordsData[counter]={
+            'id': "_" + key.replace(/\s+/g, ''),
+            'title': stages[key],
+            'class': key.replace(/\s+/g, ''),
+            'item': [
+                {
+                    'title': "Do Something!"
+                },
+                {
+                    'title': "Run?"
+                }
+            ]
+        };
+        counter++;
+
+        console.log(stages[key]);
+        console.log(key);
+    }
+    const bordValue=bordsData;
+    console.log(bordsData);
+
+
     var KanbanTest = new jKanban({
         element: "#myKanban",
-        gutter: "10px",
-        widthBoard: "450px",
+        gutter: "1px",
+        widthBoard: "150px",
         itemHandleOptions:{
-            enabled: true,
+            enabled: false,
         },
         click: function(el) {
             console.log("Trigger on all items click!");
@@ -47,63 +75,7 @@
             };
         },
         addItemButton: true,
-        boards: [
-            {
-                id: "_todo",
-                title: "To Do (Can drop item only in working)",
-                class: "info,good",
-                dragTo: ["_working"],
-                item: [
-                    {
-                        id: "_test_delete",
-                        title: "Try drag this (Look the console)",
-                        drag: function(el, source) {
-                            console.log("START DRAG: " + el.dataset.eid);
-                        },
-                        dragend: function(el) {
-                            console.log("END DRAG: " + el.dataset.eid);
-                        },
-                        drop: function(el) {
-                            console.log("DROPPED: " + el.dataset.eid);
-                        }
-                    },
-                    {
-                        title: "Try Click This!",
-                        click: function(el) {
-                            alert("click");
-                        },
-                        class: ["peppe", "bello"]
-                    }
-                ]
-            },
-            {
-                id: "_working",
-                title: "Working (Try drag me too)",
-                class: "warning",
-                item: [
-                    {
-                        title: "Do Something!"
-                    },
-                    {
-                        title: "Run?"
-                    }
-                ]
-            },
-            {
-                id: "_done",
-                title: "Done (Can drop item only in working)",
-                class: "success",
-                dragTo: ["_working"],
-                item: [
-                    {
-                        title: "All right"
-                    },
-                    {
-                        title: "Ok!"
-                    }
-                ]
-            }
-        ]
+        boards: bordValue
     });
 
     var toDoButton = document.getElementById("addToDo");
