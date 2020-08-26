@@ -1,13 +1,13 @@
 <link rel="stylesheet" href="custom/include/lib/jkanban/jkanban.min.css" />
 <script src="custom/include/lib/jkanban/jkanban.min.js"></script>
 <div id="myKanban"></div>
-<button id="addDefault">Add "Default" board</button>
-<br />
-<button id="addToDo">Add element in "To Do" Board</button>
-<br />
-<button id="removeBoard">Remove "Done" Board</button>
-<br />
-<button id="removeElement">Remove "My Task Test"</button>
+{*<button id="addDefault">Add "Default" board</button>*}
+{*<br />*}
+{*<button id="addToDo">Add element in "To Do" Board</button>*}
+{*<br />*}
+{*<button id="removeBoard">Remove "Done" Board</button>*}
+{*<br />*}
+{*<button id="removeElement">Remove "My Task Test"</button>*}
 <script>
 
     var stages={$STAGES};
@@ -43,7 +43,7 @@ var counter=0;
         gutter: "1px",
         widthBoard: "150px",
         itemHandleOptions:{
-            enabled: false,
+            enabled: true,
         },
         click: function(el) {
             console.log("Trigger on all items click!");
@@ -74,7 +74,7 @@ var counter=0;
                 formItem.parentNode.removeChild(formItem);
             };
         },
-        addItemButton: true,
+        addItemButton: false,
         boards: bordValue
     });
 

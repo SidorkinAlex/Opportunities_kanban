@@ -77,9 +77,26 @@ class BORD_OPPORTUNITIES extends Basic
     /**
      * @return JSON Sales Stage from Opportunities
      */
-    public function getStages(){
+    public function getStages()
+    {
         global $app_list_strings;
-        return json_encode($app_list_strings['sales_stage_dom']);
+        $bordConfig = $this->getConfig();
+        $stages = [];
+        if (!empty($bordConfig['stages'])) {
+            for ($i = 0; $i < count($bordConfig['stages']); $i++) {
+                $stages[$bordConfig['stages'][$i]['name']] = $app_list_strings['sales_stage_dom'][$bordConfig['stages'][$i]['name']];
+            }
+        }
+        return json_encode($stages);
     }
-	
+
+    public function getOppData(){
+
+    }
+
+    private function getConfig()
+    {
+        include 'modules/BORD_OPPORTUNITIES/bord-conf.php';
+    return $bordConf;
+    }
 }
