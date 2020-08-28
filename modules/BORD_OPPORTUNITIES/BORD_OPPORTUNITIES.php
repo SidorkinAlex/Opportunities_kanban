@@ -94,9 +94,14 @@ class BORD_OPPORTUNITIES extends Basic
 
     }
 
-    private function getConfig()
+    public function getConfig()
     {
         include 'modules/BORD_OPPORTUNITIES/bord-conf.php';
     return $bordConf;
+    }
+
+    static function getBordConfig(){
+        include 'modules/BORD_OPPORTUNITIES/bord-conf.php';
+        return $bordConf;
     }
 }
