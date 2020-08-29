@@ -107,8 +107,6 @@ class BORD_OPPORTUNITIES extends Basic
 
     public function getCountOpp(){
         global $db;
-
-        global $db;
         $stage=[];
         $bordConf=self::getBordConfig();
         foreach ($bordConf['stages'] as $v) {

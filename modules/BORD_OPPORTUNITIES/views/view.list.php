@@ -20,9 +20,6 @@ class BORD_OPPORTUNITIESViewList extends ViewList
         }
         $seedBordOpp = new BORD_OPPORTUNITIES();
         $countOpp=$seedBordOpp->getCountOpp();
-        if($countOpp > 100){
-
-        }
         $this->lv->ss->assign("STAGES", $seedBordOpp->getStages());
         $this->lv->ss->assign("bordConfig", json_encode($seedBordOpp->getConfig()));
         $this->lv->ss->assign("countOpp", $countOpp);

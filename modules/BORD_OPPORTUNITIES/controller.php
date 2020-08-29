@@ -63,4 +63,9 @@ class CustomBORD_OPPORTUNITIESController extends SugarController
         }
         echo json_encode($data);
     }
+
+    public function action_getCountOpp(){
+        $seedOpp=new BORD_OPPORTUNITIES();
+        echo $seedOpp->getCountOpp();
+    }
 }
