@@ -104,4 +104,57 @@ class BORD_OPPORTUNITIES extends Basic
         include 'modules/BORD_OPPORTUNITIES/bord-conf.php';
         return $bordConf;
     }
+
+    public function getCountOpp(){
+        global $db;
+
+        global $db;
+        $stage=[];
+        $bordConf=self::getBordConfig();
+        foreach ($bordConf['stages'] as $v) {
+            if($v['show'] === true){
+                $stage[]=$v['name'];
+            }
+        }
+
+
+        $order_by='date_entered DESC';
+        if($stage) {
+            $in = "'" . implode("','",$stage) . "'";
+            $where = '(opportunities.sales_stage in (' . $in . '))';
+        }
+        $filter=array (
+            'sales_stage' => true,
+        );
+        $params=array (
+            'massupdate' => true,
+            'orderBy' => 'DATE_ENTERED',
+            'overrideOrder' => true,
+            'sortOrder' => 'DESC',
+        );
+        $show_deleted=0;
+        $join_type='';
+        $return_array=true;
+        $singleSelect=true;
+        $ifListForExport=false;
+        $parentbean= new Opportunity();
+        $been= new Opportunity();
+        $create_new_list_query=$been->create_new_list_query(
+            $order_by,
+            $where,
+            $filter,
+            $params,
+            $show_deleted,
+            $join_type,
+            $return_array,
+            $parentbean,
+            $singleSelect,
+            $ifListForExport
+        );
+        $create_new_list_query['select']='SELECT COUNT(opportunities.`id`)';
+        $sql=$create_new_list_query['select'] . $create_new_list_query['from'] . $create_new_list_query['where'] . $create_new_list_query['order_by'];
+
+        $result = $db->getOne($sql,1);
+        return $result;
+    }
 }

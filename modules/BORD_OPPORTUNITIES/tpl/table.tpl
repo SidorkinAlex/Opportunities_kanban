@@ -8,9 +8,39 @@
 {*<button id="removeBoard">Remove "Done" Board</button>*}
 {*<br />*}
 {*<button id="removeElement">Remove "My Task Test"</button>*}
-<script>
+<!-- Большие модальное окно -->
+<a class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" id="test_button">test modal</a>
 
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="modal-body">
+
+        </div>
+    </div>
+</div>
+
+<script>
+    {literal}
+    $('#test_button').click(function () {
+        loadmodalbody();
+
+    });
+
+    function loadmodalbody() {
+        $.ajax({
+            url: 'index.php?module=Opportunities&action=quickDetail&record=16395f63-ff01-5574-8bba-5f37f130e00b',
+            method: 'post',
+            dataType: 'html',
+            //data: {text: 'Текст'},
+            success: function(data){
+                $('#modal-body').html(data);
+            }
+        });
+    }
+    {/literal}
+    var configBord = {$bordConfig}
     var stages={$STAGES};
+    var countOpp={$countOpp};
     {literal}
     var bordsData=[];
 var counter=0;

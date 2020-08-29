@@ -58,6 +58,10 @@ $bordConf=[
             'show' => true,
         ],
     ],
+    'mainFields' => [
+      'name',
+      'date_entered',
+    ],
 ];
 /*
  *

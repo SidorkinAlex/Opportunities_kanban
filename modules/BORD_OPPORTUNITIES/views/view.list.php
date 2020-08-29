@@ -19,7 +19,14 @@ class BORD_OPPORTUNITIESViewList extends ViewList
             return;
         }
         $seedBordOpp = new BORD_OPPORTUNITIES();
+        $countOpp=$seedBordOpp->getCountOpp();
+        if($countOpp > 100){
+
+        }
         $this->lv->ss->assign("STAGES", $seedBordOpp->getStages());
+        $this->lv->ss->assign("bordConfig", json_encode($seedBordOpp->getConfig()));
+        $this->lv->ss->assign("countOpp", $countOpp);
+        print_r($seedBordOpp->getStages());
         if (empty($_REQUEST['search_form_only']) || $_REQUEST['search_form_only'] == false) {
             $this->lv->ss->assign("SEARCH", true);
             $this->lv->ss->assign('savedSearchData', $this->searchForm->getSavedSearchData());
