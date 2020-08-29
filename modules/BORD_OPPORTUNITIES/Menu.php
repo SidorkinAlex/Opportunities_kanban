@@ -42,10 +42,10 @@
     die('Not A Valid Entry Point');
 }
 
-global $mod_strings, $app_strings, $sugar_config;
+global $mod_strings, $app_strings, $sugar_config,$current_user;
  
-if(ACLController::checkAccess('BORD_OPPORTUNITIES', 'edit', true)){
-    $module_menu[]=array('index.php?module=BORD_OPPORTUNITIES&action=EditView&return_module=BORD_OPPORTUNITIES&return_action=DetailView', $mod_strings['LNK_NEW_RECORD'], 'Add', 'BORD_OPPORTUNITIES');
+if(is_admin($current_user)){
+    $module_menu[]=array('index.php?module=BORD_OPPORTUNITIES&action=settings', $mod_strings['LNK_SETTINGS'], 'Add', 'BORD_OPPORTUNITIES');
 }
 if(ACLController::checkAccess('BORD_OPPORTUNITIES', 'list', true)){
     $module_menu[]=array('index.php?module=BORD_OPPORTUNITIES&action=index&return_module=BORD_OPPORTUNITIES&return_action=DetailView', $mod_strings['LNK_LIST'],'View', 'BORD_OPPORTUNITIES');

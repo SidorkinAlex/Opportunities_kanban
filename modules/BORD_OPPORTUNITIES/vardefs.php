@@ -39,11 +39,21 @@
  */
 
 $dictionary['BORD_OPPORTUNITIES'] = array(
-    //'table' => 'bord_opportunities',
+    'table' => 'bord_opportunities',
     'audited' => false,
     'inline_edit' => true,
     'duplicate_merge' => true,
     'fields' => array (
+        'id' =>
+            array (
+                'name' => 'id',
+                'vname' => 'LBL_ID',
+                'type' => 'id',
+                'required' => true,
+                'reportable' => true,
+                'comment' => 'Unique identifier',
+                'inline_edit' => false,
+            ),
 ),
     'relationships' => array (
 ),
