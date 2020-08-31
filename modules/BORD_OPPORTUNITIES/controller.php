@@ -12,9 +12,18 @@ class CustomBORD_OPPORTUNITIESController extends SugarController
     {
         global $db;
 
+        $bordConfig=BORD_OPPORTUNITIES::getBordConfig();
         $order_by='date_entered DESC';
         if($_REQUEST['where']) {
             $in = "'" . implode("','",$_REQUEST['where']) . "'";
+            $where = '(opportunities.sales_stage in (' . $in . '))';
+        } else {
+            $stagesDefault=[];
+            foreach ($bordConfig['stages'] as $v){
+                if($v['show'])
+                $stagesDefault[]=$v['name'];
+            }
+            $in = "'" . implode("','",$stagesDefault) . "'";
             $where = '(opportunities.sales_stage in (' . $in . '))';
         }
         $filter=array (
@@ -45,7 +54,6 @@ class CustomBORD_OPPORTUNITIESController extends SugarController
             $singleSelect,
             $ifListForExport
         );
-        $bordConfig=BORD_OPPORTUNITIES::getBordConfig();
         $mainFields= '`opportunities`.' . implode(', " " ,`opportunities`.',$bordConfig['mainFields']);
         //print_array($create_new_list_query);
         $create_new_list_query['select']=' SELECT opportunities.`id` as `opportunities_id`, CONCAT(' . $mainFields . ') as `opportunities_name`, opportunities.`sales_stage` as `opportunities_sales_stage`';

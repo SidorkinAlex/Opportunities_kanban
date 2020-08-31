@@ -38,26 +38,20 @@
         });
     }
     {/literal}
-    var configBord = {$bordConfig}
+    var configBord = {$bordConfig|@json_encode}
     var stages={$STAGES};
     var countOpp={$countOpp};
     {literal}
     var bordsData=[];
-var counter=0;
+    var counter=0;
     for (var key in stages) {
 
         bordsData[counter]={
             'id': "_" + key.replace(/\s+/g, ''),
             'title': stages[key],
+            'test-name':key,
             'class': key.replace(/\s+/g, ''),
-            'item': [
-                {
-                    'title': "Do Something!"
-                },
-                {
-                    'title': "Run?"
-                }
-            ]
+            'item': []
         };
         counter++;
 
@@ -71,7 +65,8 @@ var counter=0;
     var KanbanTest = new jKanban({
         element: "#myKanban",
         gutter: "1px",
-        widthBoard: "150px",
+        widthBoard: "250px",
+        dragBoards: false,
         itemHandleOptions:{
             enabled: true,
         },
@@ -108,47 +103,66 @@ var counter=0;
         boards: bordValue
     });
 
-    var toDoButton = document.getElementById("addToDo");
-    toDoButton.addEventListener("click", function() {
-        KanbanTest.addElement("_todo", {
-            title: "Test Add"
-        });
+
+
+
+
+
+    $(document).ready(function () {
+        if(countOpp < 100){
+            getAllStage();
+        }
     });
 
-    var addBoardDefault = document.getElementById("addDefault");
-    addBoardDefault.addEventListener("click", function() {
-        KanbanTest.addBoards([
-            {
-                id: "_default",
-                title: "Kanban Default",
-                item: [
-                    {
-                        title: "Default Item"
-                    },
-                    {
-                        title: "Default Item 2"
-                    },
-                    {
-                        title: "Default Item 3"
-                    }
-                ]
+    function getAllStage() {
+        var stagesURL = '';
+        ajax_request('index.php?module=BORD_OPPORTUNITIES&action=getData&to_pdf=true','JSON','','setItems');
+    }
+    function setItems(data) {
+        console.log(data);
+        for (var key in data) {
+            for (index = 0; index < data[key].length; ++index) {
+                console.log(data[key][index]);
+                KanbanTest.addElement("_" + key.replace(/\s+/g, ''),{
+                    title:"<p>"+data[key][index]['opportunities_name']+"</p>",
+                    idopp:data[key][index]['id'],
+                });
             }
-        ]);
-    });
+        }
 
-    var removeBoard = document.getElementById("removeBoard");
-    removeBoard.addEventListener("click", function() {
-        KanbanTest.removeBoard("_done");
-    });
+    }
+    function ajax_request(url,dataType,urlParams,functionName) {
+        $.ajax({
+            url: url,         /* Куда пойдет запрос */
+            method: 'post',             /* Метод передачи (post или get) */
+            dataType: dataType,          /* Тип данных в ответе (xml, json, script, html). */
+            data: urlParams,     /* Параметры передаваемые в запросе. */
+            success: function(data){   /* функция которая будет выполнена после успешного запроса.  */
+                if(functionName == 'setItems'){
+                    setItems(data);
+                }
+            }
+        });
 
-    var removeElement = document.getElementById("removeElement");
-    removeElement.addEventListener("click", function() {
-        KanbanTest.removeElement("_test_delete");
-    });
+    }
 
-    var allEle = KanbanTest.getBoardElements("_todo");
-    allEle.forEach(function(item, index) {
-        //console.log(item);
-    });
 </script>
+    <style>
+        #myKanban{
+        {/literal}
+            height: {$bordConfig.kanban.myKanbanHeight}px;
+            overflow-y: {$bordConfig.kanban.myKanbanOverflowY};
+            overflow-x: {$bordConfig.kanban.myKanbanOverflowX};
+        {literal}
+        }
+        .kanban-drag{
+        {/literal}
+            height: {$bordConfig.kanban.kanbandragHeight}px;
+            overflow-y: scroll;
+        {literal}
+        }
+        .drag_handler{
+            float: none;
+        }
+    </style>
 {/literal}

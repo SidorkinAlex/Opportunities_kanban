@@ -84,7 +84,9 @@ class BORD_OPPORTUNITIES extends Basic
         $stages = [];
         if (!empty($bordConfig['stages'])) {
             for ($i = 0; $i < count($bordConfig['stages']); $i++) {
-                $stages[$bordConfig['stages'][$i]['name']] = $app_list_strings['sales_stage_dom'][$bordConfig['stages'][$i]['name']];
+                if($bordConfig['stages'][$i]['display']) {
+                    $stages[$bordConfig['stages'][$i]['name']] = $app_list_strings['sales_stage_dom'][$bordConfig['stages'][$i]['name']];
+                }
             }
         }
         return json_encode($stages);
