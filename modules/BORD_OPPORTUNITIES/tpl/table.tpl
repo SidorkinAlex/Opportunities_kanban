@@ -38,7 +38,7 @@
         });
     }
     {/literal}
-    var configBord = {$bordConfig|@json_encode}
+    var configBord = {$bordConfig|@json_encode};
     var stages={$STAGES};
     var countOpp={$countOpp};
     {literal}
@@ -112,10 +112,24 @@
         if(countOpp < 100){
             getAllStage();
         }
+        if(countOpp >= 100 && countOpp < 1000 ){
+            console.log('getDataFromStage');
+            getDataFromStage();
+        }
     });
 
+    function getDataFromStage() {
+        console.log(configBord['stages']);
+        for (index = 0; index < configBord['stages'].length; ++index) {
+            console.log(configBord['stages'][index]);
+            if(configBord['stages'][index]['show']) {
+                console.log('index.php?module=BORD_OPPORTUNITIES&action=getData&where[]=' + configBord.stages[index]['name'] + '&to_pdf=true');
+                ajax_request('index.php?module=BORD_OPPORTUNITIES&action=getData&where[]=' + configBord.stages[index]['name'] + '&to_pdf=true', 'JSON', '', 'setItems');
+            }
+        }
+    }
+
     function getAllStage() {
-        var stagesURL = '';
         ajax_request('index.php?module=BORD_OPPORTUNITIES&action=getData&to_pdf=true','JSON','','setItems');
     }
     function setItems(data) {
