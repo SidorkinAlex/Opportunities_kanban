@@ -43,9 +43,9 @@ $dictionary['BORD_OPPORTUNITIES'] = array(
     'audited' => false,
     'inline_edit' => true,
     'duplicate_merge' => true,
-    'fields' => array (
+    'fields' => array(
         'id' =>
-            array (
+            array(
                 'name' => 'id',
                 'vname' => 'LBL_ID',
                 'type' => 'id',
@@ -54,9 +54,17 @@ $dictionary['BORD_OPPORTUNITIES'] = array(
                 'comment' => 'Unique identifier',
                 'inline_edit' => false,
             ),
-),
-    'relationships' => array (
-),
+        'config' =>
+            array(
+                'name' => 'config',
+                'vname' => 'LBL_CONFIG',
+                'type' => 'text',
+                'comment' => '',
+                'rows' => 6,
+                'cols' => 80,
+            ),
+    ),
+    'relationships' => array(),
     'optimistic_locking' => true,
     'unified_search' => true,
 );

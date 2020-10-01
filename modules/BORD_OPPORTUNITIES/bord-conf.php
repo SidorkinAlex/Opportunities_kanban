@@ -62,6 +62,14 @@ $bordConf=[
       'name',
       'date_entered',
     ],
+    'kanban' => [
+        'myKanbanHeight' => 'auto',
+        'myKanbanOverflowY' => 'auto',
+        'myKanbanOverflowX' => 'scroll',
+        'kanbandragHeight' => '450',
+
+    ],
+    'limitIterationITems' => 30,
 ];
 /*
  *
