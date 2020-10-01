@@ -112,18 +112,38 @@
         if(countOpp < 100){
             getAllStage();
         }
-        if(countOpp >= 100 && countOpp < 1000 ){
-            console.log('getDataFromStage');
+        if(countOpp >= 100  ){
             getDataFromStage();
         }
+//        if(countOpp >= 1000){
+//            getDataFromStageLimit();
+//        }
     });
+//    function getDataFromStageLimit() {
+//        //get 30 first entries
+//        for (index = 0; index < configBord['stages'].length; ++index) {
+//            if(configBord['stages'][index]['show']) {
+//                ajax_request('index.php?module=BORD_OPPORTUNITIES&action=getData&where[]=' + configBord.stages[index]['name'] + '&to_pdf=true&limitMax=' + configBord['limitIterationITems'], 'JSON', '', 'setItems');
+//                configBord['stages'][index]['loadItems']=configBord['limitIterationITems'];
+//            }
+//        }
+//        //get oеher record
+//        getOthersRecord();
+//
+//    }
 
-    function getDataFromStage() {
-        console.log(configBord['stages']);
+    function getOthersRecord() {
         for (index = 0; index < configBord['stages'].length; ++index) {
-            console.log(configBord['stages'][index]);
             if(configBord['stages'][index]['show']) {
-                console.log('index.php?module=BORD_OPPORTUNITIES&action=getData&where[]=' + configBord.stages[index]['name'] + '&to_pdf=true');
+                var limitMax = configBord['stages'][index]['loadItems'] + configBord['limitIterationITems'];
+                ajax_request('index.php?module=BORD_OPPORTUNITIES&action=getData&where[]=' + configBord.stages[index]['name'] + '&to_pdf=true&limitMin=' + configBord['stages'][index]['loadItems'] + '&limitMax=' + limitMax, 'JSON', '', 'setItems')
+            }
+        }
+
+    }
+    function getDataFromStage() {
+        for (index = 0; index < configBord['stages'].length; ++index) {
+            if(configBord['stages'][index]['show']) {
                 ajax_request('index.php?module=BORD_OPPORTUNITIES&action=getData&where[]=' + configBord.stages[index]['name'] + '&to_pdf=true', 'JSON', '', 'setItems');
             }
         }
@@ -142,6 +162,7 @@
                     idopp:data[key][index]['id'],
                 });
             }
+            configBord['stages'][key]['loadItems']=configBord['stages'][key]['loadItems'] + data[key].length;
         }
 
     }
@@ -155,6 +176,16 @@
                 if(functionName == 'setItems'){
                     setItems(data);
                 }
+//                if(functionName == 'setItemsRecursion'){
+//                    if(data != ''){
+//                        setItems(data);
+//                        params = new URLSearchParams(urlParams);
+//                        console.log(params);
+//                        // формируем новый урл нужный для нас
+//                        //ajax_request с параметрами для самовызова
+//                    }
+//
+//                }
             }
         });
 

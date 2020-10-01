@@ -68,7 +68,8 @@ $bordConf=[
         'myKanbanOverflowX' => 'scroll',
         'kanbandragHeight' => '450',
 
-    ]
+    ],
+    'limitIterationITems' => 30,
 ];
 /*
  *

@@ -63,6 +63,7 @@ class BORD_OPPORTUNITIES extends Basic
     public $assigned_user_name;
     public $assigned_user_link;
     public $SecurityGroups;
+    const STAP_LIMIT=30;
 	
     public function bean_implements($interface)
     {
@@ -98,11 +99,13 @@ class BORD_OPPORTUNITIES extends Basic
 
     public function getConfig()
     {
+        $bordConf=[];
         include 'modules/BORD_OPPORTUNITIES/bord-conf.php';
     return $bordConf;
     }
 
     static function getBordConfig(){
+        $bordConf=[];
         include 'modules/BORD_OPPORTUNITIES/bord-conf.php';
         return $bordConf;
     }
@@ -163,7 +166,7 @@ class BORD_OPPORTUNITIES extends Basic
      * @param array $whereArr
      * @return array
      */
-    public function getDataOpp($whereArr){
+    public function getDataOpp($whereArr,$limitMin=null,$limitMax= null){
 
         global $db;
 
@@ -180,6 +183,15 @@ class BORD_OPPORTUNITIES extends Basic
             }
             $in = "'" . implode("','",$stagesDefault) . "'";
             $where = '(opportunities.sales_stage in (' . $in . '))';
+        }
+        $LIMIT='';
+        if(!empty($limitMax)){
+            if(!empty($limitMin) ) {
+                $limitDiff=$limitMax - $limitMin;
+                $LIMIT = "LIMIT {$limitMin},{$limitDiff}";
+            } else {
+                $LIMIT = "LIMIT {$limitMax}";
+            }
         }
         $filter=array (
             'sales_stage' => true,
@@ -214,7 +226,7 @@ class BORD_OPPORTUNITIES extends Basic
         $create_new_list_query['select']=' SELECT opportunities.`id` as `opportunities_id`, CONCAT(' . $mainFields . ') as `opportunities_name`, opportunities.`sales_stage` as `opportunities_sales_stage`';
         //print_array($create_new_list_query['select'] . $create_new_list_query['from'] . $create_new_list_query['where'] . $create_new_list_query['order_by']);
         $sql=$create_new_list_query['select'] . $create_new_list_query['from'] . $create_new_list_query['where'] . $create_new_list_query['order_by'];
-
+        $sql=$sql . "\n {$LIMIT}";
         $result=$db->query($sql,1);
         $data=[];
         while ($row = $db->fetchByAssoc($result)) {

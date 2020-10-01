@@ -19,4 +19,12 @@ class CustomBORD_OPPORTUNITIESController extends SugarController
         $seedOpp=new BORD_OPPORTUNITIES();
         echo $seedOpp->getCountOpp();
     }
+
+    public function action_getDataLimit(){
+        $whereArr = $_REQUEST['where'];
+        $limitIntervalMin = $_REQUEST['limitMin'];
+        $limitIntervalMax = $_REQUEST['limitMax'];
+        $seedOpp = new BORD_OPPORTUNITIES();
+        $seedOpp->getDataOpp($whereArr,$limitIntervalMin,$limitIntervalMax);
+    }
 }
