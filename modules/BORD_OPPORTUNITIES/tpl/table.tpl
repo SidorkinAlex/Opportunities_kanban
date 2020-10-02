@@ -86,16 +86,6 @@
                     ajax_request('index.php?module=Opportunities&action=save&to_pdf=true', 'html', data, 'nohtink');
                 }
             }
-            console.log('bordsData');
-            console.log(bordsData);
-            console.log('el');
-            console.log(el.getAttribute('data-idopp'));
-            console.log('target');
-            console.log(target);
-            console.log('source');
-            console.log(source);
-            console.log('sibling');
-            console.log(sibling);
         },
         buttonClick: function(el, boardId) {
             console.log(el);
