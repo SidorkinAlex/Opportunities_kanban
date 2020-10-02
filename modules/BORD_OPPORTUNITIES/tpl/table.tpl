@@ -49,7 +49,7 @@
         bordsData[counter]={
             'id': "_" + key.replace(/\s+/g, ''),
             'title': stages[key],
-            'test-name':key,
+            'key':key,
             'class': key.replace(/\s+/g, ''),
             'item': []
         };
@@ -74,8 +74,18 @@
             console.log("Trigger on all items click!");
         },
         dropEl: function(el, target, source, sibling){
-            console.log(target.parentElement.getAttribute('data-id'));
-            console.log(el, target, source, sibling)
+            var id = el.getAttribute('data-idopp');
+            for (var i = 0; i < bordsData.length; i++) {
+                if(bordsData[i]["id"] == target.parentElement.getAttribute('data-id') ){
+                    var newStatus= bordsData[i]["key"];
+                    var data = {
+                        "action":"save",
+                        'id': id,
+                        'sales_stage': newStatus
+                    };
+                    ajax_request('index.php?module=Opportunities&action=save&to_pdf=true', 'html', data, 'nohtink');
+                }
+            }
         },
         buttonClick: function(el, boardId) {
             console.log(el);
@@ -162,7 +172,11 @@
                     idopp:data[key][index]['id'],
                 });
             }
-            configBord['stages'][key]['loadItems']=configBord['stages'][key]['loadItems'] + data[key].length;
+//            if(typeof configBord['stages'][key]['loadItems'] == "undefined") {
+//                configBord['stages'][key]['loadItems'] = data[key].length;
+//            } else {
+//                configBord['stages'][key]['loadItems'] = configBord['stages'][key]['loadItems'] + data[key].length;
+//            }
         }
 
     }
