@@ -19,6 +19,21 @@ class CustomBORD_OPPORTUNITIESController extends SugarController
         $seedOpp=new BORD_OPPORTUNITIES();
         echo $seedOpp->getCountOpp();
     }
+    public function action_saveSattings(){
+        global $current_user;
+        $bordConf=$current_user->getPreference('bordConf');
+        unset($bordConf['stages']);
+        foreach ($_REQUEST['stage'] as $stage){
+            $bordConf['stages'][$stage['sortable']] = array(
+                'name'=> $stage['name'],
+                'display' => !empty($stage['display']) ? true : false ,
+                'show' => !empty($stage['show']) ? true : false ,
+            );
+        }
+        $current_user->setPreference('bordConf',$bordConf);
+        header('Location: index.php?module=BORD_OPPORTUNITIES&action=boardSettings');
+
+    }
 
     public function action_getDataLimit(){
         $whereArr = $_REQUEST['where'];
