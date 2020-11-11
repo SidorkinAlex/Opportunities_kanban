@@ -209,9 +209,9 @@
     <style>
         #myKanban{
         {/literal}
-            height: {$bordConfig.kanban.myKanbanHeight}px;
-            overflow-y: {$bordConfig.kanban.myKanbanOverflowY};
-            overflow-x: {$bordConfig.kanban.myKanbanOverflowX};
+            height: auto;
+            overflow-y: auto;
+            overflow-x: scroll;
         {literal}
         }
         .kanban-drag{

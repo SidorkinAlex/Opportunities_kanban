@@ -26,6 +26,7 @@ class boardSettingsView
     public function display()
     {
         global $app_list_strings;
+        global $current_language;
         $seedBORD = new BORD_OPPORTUNITIES();
         $seedOpportunity = BeanFactory::newBean('Opportunities');
         $config = $seedBORD->getConfig();
@@ -44,7 +45,21 @@ class boardSettingsView
                 'name' => $name,
             );
         }
+        $fields =[];
+        $option_fields=[];
+        $module_strings = return_module_language($current_language, 'Opportunities');
+        foreach ($seedOpportunity->field_name_map as $field_name => $field_arr){
+            if(key_exists($field_arr['type'],['link',''])
+            || ( !empty($field_arr['source']) && $field_arr['source'] == 'non-db')
+            ){
+                continue;
+            }
+            $fields[]=$field_arr['name'];
+            $option_fields[$field_arr['name']] = $module_strings[$field_arr['vname']];
+        }
+        $this->ss->assign('optionFilds', $option_fields);
         $this->ss->assign('config', $config);
+        $this->ss->assign('fieldNameMap', $fields);
 
         $html = $this->ss->fetch('modules/BORD_OPPORTUNITIES/tpl/SettingsPage.tpl');
         echo $html;

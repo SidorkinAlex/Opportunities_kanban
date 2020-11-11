@@ -30,6 +30,13 @@ class CustomBORD_OPPORTUNITIESController extends SugarController
                 'show' => !empty($stage['show']) ? true : false ,
             );
         }
+        ksort($bordConf['stages']);
+        unset($bordConf['mainFields']);
+        foreach ($_REQUEST['mainFields'] as $mainField){
+            $bordConf['mainFields'][$mainField['sort']] = $mainField['value'];
+        }
+        ksort ($bordConf['mainFields']);
+        $bordConf['kanban']['kanbandragHeight'] = $_REQUEST['kanbandragHeight'];
         $current_user->setPreference('bordConf',$bordConf);
         header('Location: index.php?module=BORD_OPPORTUNITIES&action=boardSettings');
 
