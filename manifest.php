@@ -28,26 +28,29 @@ $manifest = array (
     ),
   ),
   'readme' => '',
-  'key' => 'CRST',
+  'key' => 'BOARD',
   'author' => 'Alex Sidorkin',
-  'description' => 'Run reports on a schedule as a user and not as an administrator',
+  'description' => 'displaying opportunities in the kanban board',
   'icon' => '',
   'is_uninstallable' => true,
-  'name' => 'Custom Scheduled reports task',
+  'name' => 'Opportunities Board',
   'published_date' => '2020-08-216 09:10:55',
   'type' => 'module',
   'version' => '1.0.0',
   'remove_tables' => 'prompt',
   'copy_files' => 
   array (
-    'from_dir' => 'custom',
   ),
 );
 
 $installdefs = array (
-  'id' => 'CRST',
+  'id' => 'BOARD',
   'beans' => 
   array (
+      'module' => 'BOARD_OPPORTUNITIES',
+      'class' => 'BOARD_OPPORTUNITIES',
+      'path' => 'modules/BOARD_OPPORTUNITIES/BOARD_OPPORTUNITIES.php',
+      'tab' => true,
   ),
   'copy' => 
   array (
@@ -55,6 +58,11 @@ $installdefs = array (
     array (
       'from' => '<basepath>/custom',
       'to' => 'custom',
+    ),
+ 1 => 
+    array (
+      'from' => '<basepath>/modules',
+      'to' => 'modules',
     ),
   ),
   'language' => 
