@@ -38,28 +38,26 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-
-require_once('include/Dashlets/DashletGeneric.php');
-require_once('modules/BORD_OPPORTUNITIES/BORD_OPPORTUNITIES.php');
-
-class BORD_OPPORTUNITIESDashlet extends DashletGeneric {
-    function __construct($id, $def = null)
-    {
-        global $current_user, $app_strings;
-        require('modules/BORD_OPPORTUNITIES/metadata/dashletviewdefs.php');
-
-        parent::__construct($id, $def);
-
-        if (empty($def['title'])) {
-            $this->title = translate('LBL_HOMEPAGE_TITLE', 'BORD_OPPORTUNITIES');
-        }
-
-        $this->searchFields = $dashletData['BORD_OPPORTUNITIESDashlet']['searchFields'];
-        $this->columns = $dashletData['BORD_OPPORTUNITIESDashlet']['columns'];
-
-        $this->seedBean = new BORD_OPPORTUNITIES();        
-    }
-}
+$module_name = 'BOARD_OPPORTUNITIES';
+$searchdefs[$module_name] = array(
+    'templateMeta' => array(
+        'maxColumns' => '3',
+        'maxColumnsBasic' => '4',
+        'widths' => array('label' => '10', 'field' => '30'),
+    ),
+    'layout' => array(
+        'basic_search' => array(
+            'name',
+            array('name' => 'current_user_only', 'label' => 'LBL_CURRENT_USER_FILTER', 'type' => 'bool'),
+        ),
+        'advanced_search' => array(
+            'name',
+            array(
+                'name' => 'assigned_user_id',
+                'label' => 'LBL_ASSIGNED_TO',
+                'type' => 'enum',
+                'function' => array('name' => 'get_user_array', 'params' => array(false))
+            ),
+        ),
+    ),
+);

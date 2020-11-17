@@ -38,8 +38,8 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$module_name = 'BORD_OPPORTUNITIES';
-$viewdefs[$module_name]['QuickCreate'] = array(
+$module_name = 'BOARD_OPPORTUNITIES';
+$viewdefs[$module_name]['EditView'] = array(
     'templateMeta' => array(
         'maxColumns' => '2',
         'widths' => array(
@@ -54,6 +54,10 @@ $viewdefs[$module_name]['QuickCreate'] = array(
             array(
                 'name',
                 'assigned_user_name',
+            ),
+
+            array(
+                'description',
             ),
         ),
 

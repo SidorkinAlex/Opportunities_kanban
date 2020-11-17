@@ -6,17 +6,17 @@
  * Date: 27.08.20
  * Time: 16:11
  */
-class CustomBORD_OPPORTUNITIESController extends SugarController
+class CustomBOARD_OPPORTUNITIESController extends SugarController
 {
     public function action_getData()
     {
-        $seedOpp=new BORD_OPPORTUNITIES();
+        $seedOpp=new BOARD_OPPORTUNITIES();
         $data=$seedOpp->getDataOpp($_REQUEST['where']);
         echo json_encode($data);
     }
 
     public function action_getCountOpp(){
-        $seedOpp=new BORD_OPPORTUNITIES();
+        $seedOpp=new BOARD_OPPORTUNITIES();
         echo $seedOpp->getCountOpp();
     }
     public function action_saveSattings(){
@@ -38,7 +38,7 @@ class CustomBORD_OPPORTUNITIESController extends SugarController
         ksort ($bordConf['mainFields']);
         $bordConf['kanban']['kanbandragHeight'] = $_REQUEST['kanbandragHeight'];
         $current_user->setPreference('bordConf',$bordConf);
-        header('Location: index.php?module=BORD_OPPORTUNITIES&action=boardSettings');
+        header('Location: index.php?module=BOARD_OPPORTUNITIES&action=boardSettings');
 
     }
 
@@ -46,7 +46,7 @@ class CustomBORD_OPPORTUNITIESController extends SugarController
         $whereArr = $_REQUEST['where'];
         $limitIntervalMin = $_REQUEST['limitMin'];
         $limitIntervalMax = $_REQUEST['limitMax'];
-        $seedOpp = new BORD_OPPORTUNITIES();
+        $seedOpp = new BOARD_OPPORTUNITIES();
         $seedOpp->getDataOpp($whereArr,$limitIntervalMin,$limitIntervalMax);
     }
 }

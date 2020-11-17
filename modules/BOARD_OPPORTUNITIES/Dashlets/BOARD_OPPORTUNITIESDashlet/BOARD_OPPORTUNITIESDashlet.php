@@ -37,48 +37,29 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-$mod_strings = array (
-  'LBL_ASSIGNED_TO_ID' => 'Assigned User Id',
-  'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
-  'LBL_SECURITYGROUPS' => 'Security Groups',
-  'LBL_SECURITYGROUPS_SUBPANEL_TITLE' => 'Security Groups',
-  'LBL_ID' => 'ID',
-  'LBL_DATE_ENTERED' => 'Date Created',
-  'LBL_DATE_MODIFIED' => 'Date Modified',
-  'LBL_MODIFIED' => 'Modified By',
-  'LBL_MODIFIED_NAME' => 'Modified By Name',
-  'LBL_CREATED' => 'Created By',
-  'LBL_DESCRIPTION' => 'Description',
-  'LBL_DELETED' => 'Deleted',
-  'LBL_NAME' => 'Name',
-  'LBL_CREATED_USER' => 'Created by User',
-  'LBL_MODIFIED_USER' => 'Modified by User',
-  'LBL_LIST_NAME' => 'Name',
-  'LBL_EDIT_BUTTON' => 'Edit',
-  'LBL_REMOVE' => 'Remove',
-  'LBL_ASCENDING' => 'Ascending',
-  'LBL_DESCENDING' => 'Descending',
-  'LBL_OPT_IN' => 'Opt In',
-  'LBL_OPT_IN_PENDING_EMAIL_NOT_SENT' => 'Pending Confirm opt in, Confirm opt in not sent',
-  'LBL_OPT_IN_PENDING_EMAIL_SENT' => 'Pending Confirm opt in, Confirm opt in sent',
-  'LBL_OPT_IN_CONFIRMED' => 'Opted in',
-  'LBL_LIST_FORM_TITLE' => 'OPPORTUNITIES List',
-  'LBL_MODULE_NAME' => 'OPPORTUNITIES',
-  'LBL_MODULE_TITLE' => 'OPPORTUNITIES',
-  'LBL_HOMEPAGE_TITLE' => 'My OPPORTUNITIES',
-  'LNK_NEW_RECORD' => 'Create OPPORTUNITIES',
-  'LNK_LIST' => 'View OPPORTUNITIES',
-  'LNK_IMPORT_BORD_OPPORTUNITIES' => 'Import OPPORTUNITIES',
-  'LBL_SEARCH_FORM_TITLE' => 'Search OPPORTUNITIES',
-  'LBL_HISTORY_SUBPANEL_TITLE' => 'View History',
-  'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
-  'LBL_BORD_OPPORTUNITIES_SUBPANEL_TITLE' => 'OPPORTUNITIES',
-  'LBL_NEW_FORM_TITLE' => 'New OPPORTUNITIES',
-  'LNK_SETTINGS' => 'Settings',
-  'LBL_SHOW' => 'display colum',
-  'LBL_DISPLAY' => 'display opportunity',
-  'LBL_SAVE' => 'Save',
-  'LBL_CUSTOMIZING_COLUMNS' => 'Сustomizing columns',
-  'LBL_CUSTOMIZING_HEADER_FIELDS' => 'Сustomizing header fields',
-  'LBL_BOARD_COLUMN_HEIGHT' => 'Board column height',
-);
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+require_once('include/Dashlets/DashletGeneric.php');
+require_once('modules/BOARD_OPPORTUNITIES/BOARD_OPPORTUNITIES.php');
+
+class BOARD_OPPORTUNITIESDashlet extends DashletGeneric {
+    function __construct($id, $def = null)
+    {
+        global $current_user, $app_strings;
+        require('modules/BOARD_OPPORTUNITIES/metadata/dashletviewdefs.php');
+
+        parent::__construct($id, $def);
+
+        if (empty($def['title'])) {
+            $this->title = translate('LBL_HOMEPAGE_TITLE', 'BOARD_OPPORTUNITIES');
+        }
+
+        $this->searchFields = $dashletData['BOARD_OPPORTUNITIESDashlet']['searchFields'];
+        $this->columns = $dashletData['BOARD_OPPORTUNITIESDashlet']['columns'];
+
+        $this->seedBean = new BOARD_OPPORTUNITIES();        
+    }
+}

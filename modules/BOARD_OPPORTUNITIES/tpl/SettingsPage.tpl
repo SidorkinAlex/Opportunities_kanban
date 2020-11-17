@@ -1,4 +1,4 @@
-<form action="index.php?module=BORD_OPPORTUNITIES&action=saveSattings" method="post">
+<form action="index.php?module=BOARD_OPPORTUNITIES&action=saveSattings" method="post">
     <h3 class="module-title-text">{$MOD.LBL_CUSTOMIZING_COLUMNS}</h3>
         <ul id="sortable" class="sortable-ui">
             {foreach from=$config.stages key='rowNumber' item='list'}

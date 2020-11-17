@@ -5,7 +5,7 @@
  * Date: 11.10.20
  * Time: 15:17
  */
-require_once 'modules/BORD_OPPORTUNITIES/views/view.boardSettingsView.php';
+require_once 'modules/BOARD_OPPORTUNITIES/views/view.boardSettingsView.php';
 global $current_user;
 
 $seedOpp=new boardSettingsView($current_user);

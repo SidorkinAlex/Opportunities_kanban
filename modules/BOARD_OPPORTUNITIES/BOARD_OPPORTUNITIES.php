@@ -39,12 +39,12 @@
  */
 
 
-class BORD_OPPORTUNITIES extends Basic
+class BOARD_OPPORTUNITIES extends Basic
 {
     public $new_schema = true;
-    public $module_dir = 'BORD_OPPORTUNITIES';
-    public $object_name = 'BORD_OPPORTUNITIES';
-    public $table_name = 'bord_opportunities';
+    public $module_dir = 'BOARD_OPPORTUNITIES';
+    public $object_name = 'BOARD_OPPORTUNITIES';
+    public $table_name = 'board_opportunities';
     public $importable = false;
 
     public $id;
@@ -90,7 +90,7 @@ class BORD_OPPORTUNITIES extends Basic
                 }
             }
         } else{
-            header('Location: index.php?module=BORD_OPPORTUNITIES&action=boardSettings');
+            header('Location: index.php?module=BOARD_OPPORTUNITIES&action=boardSettings');
         }
         return json_encode($stages);
     }
@@ -172,7 +172,7 @@ class BORD_OPPORTUNITIES extends Basic
 
         global $db;
 
-        $bordConfig=BORD_OPPORTUNITIES::getBordConfig();
+        $bordConfig=BOARD_OPPORTUNITIES::getBordConfig();
         $order_by='date_entered DESC';
         if($whereArr) {
             $in = "'" . implode("','",$whereArr) . "'";

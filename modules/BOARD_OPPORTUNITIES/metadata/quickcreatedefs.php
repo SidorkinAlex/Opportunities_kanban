@@ -38,20 +38,25 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-
-$module_name = 'BORD_OPPORTUNITIES';
-$object_name = 'BORD_OPPORTUNITIES';
-$_module_name = 'bord_opportunities';
-$popupMeta = array(
-    'moduleMain' => $module_name,
-    'varName' => $object_name,
-    'orderBy' => $_module_name . '.name',
-    'whereClauses' => array(
-        'name' => $_module_name . '.name',
+$module_name = 'BOARD_OPPORTUNITIES';
+$viewdefs[$module_name]['QuickCreate'] = array(
+    'templateMeta' => array(
+        'maxColumns' => '2',
+        'widths' => array(
+            array('label' => '10', 'field' => '30'),
+            array('label' => '10', 'field' => '30')
+        ),
     ),
-    'searchInputs' => array($_module_name . '_number', 'name', 'priority', 'status'),
+
+    'panels' => array(
+        'default' => array(
+
+            array(
+                'name',
+                'assigned_user_name',
+            ),
+        ),
+
+    ),
 
 );

@@ -42,11 +42,20 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-global $app_strings;
+$module_name = 'BOARD_OPPORTUNITIES';
+$listViewDefs[$module_name] = array(
+    'NAME' => array(
+        'width' => '32',
+        'label' => 'LBL_NAME',
+        'default' => true,
+        'link' => true
+    ),
+    'ASSIGNED_USER_NAME' => array(
+        'width' => '9',
+        'label' => 'LBL_ASSIGNED_TO_NAME',
+        'module' => 'Employees',
+        'id' => 'ASSIGNED_USER_ID',
+        'default' => true
+    ),
 
-$dashletMeta['BORD_OPPORTUNITIESDashlet'] = array(
-    'module' => 'BORD_OPPORTUNITIES',
-    'title' => translate('LBL_HOMEPAGE_TITLE', 'BORD_OPPORTUNITIES'),
-    'description' => 'A customizable view into BORD_OPPORTUNITIES',
-    'category' => 'Module Views'
 );

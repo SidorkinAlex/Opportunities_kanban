@@ -38,26 +38,12 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$module_name = 'BORD_OPPORTUNITIES';
-$searchdefs[$module_name] = array(
-    'templateMeta' => array(
-        'maxColumns' => '3',
-        'maxColumnsBasic' => '4',
-        'widths' => array('label' => '10', 'field' => '30'),
-    ),
-    'layout' => array(
-        'basic_search' => array(
-            'name',
-            array('name' => 'current_user_only', 'label' => 'LBL_CURRENT_USER_FILTER', 'type' => 'bool'),
-        ),
-        'advanced_search' => array(
-            'name',
-            array(
-                'name' => 'assigned_user_id',
-                'label' => 'LBL_ASSIGNED_TO',
-                'type' => 'enum',
-                'function' => array('name' => 'get_user_array', 'params' => array(false))
-            ),
-        ),
-    ),
+$module_name = 'BOARD_OPPORTUNITIES';
+$metafiles[$module_name] = array(
+    'detailviewdefs' => 'modules/' . $module_name . '/metadata/detailviewdefs.php',
+    'editviewdefs' => 'modules/' . $module_name . '/metadata/editviewdefs.php',
+    'listviewdefs' => 'modules/' . $module_name . '/metadata/listviewdefs.php',
+    'searchdefs' => 'modules/' . $module_name . '/metadata/searchdefs.php',
+    'popupdefs' => 'modules/' . $module_name . '/metadata/popupdefs.php',
+    'searchfields' => 'modules/' . $module_name . '/metadata/SearchFields.php',
 );

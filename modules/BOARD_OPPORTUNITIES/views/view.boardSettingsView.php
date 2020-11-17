@@ -27,7 +27,7 @@ class boardSettingsView
     {
         global $app_list_strings;
         global $current_language;
-        $seedBORD = new BORD_OPPORTUNITIES();
+        $seedBORD = new BOARD_OPPORTUNITIES();
         $seedOpportunity = BeanFactory::newBean('Opportunities');
         $config = $seedBORD->getConfig();
         $list=$app_list_strings[$seedOpportunity->field_name_map['sales_stage']['options']];
@@ -61,7 +61,7 @@ class boardSettingsView
         $this->ss->assign('config', $config);
         $this->ss->assign('fieldNameMap', $fields);
 
-        $html = $this->ss->fetch('modules/BORD_OPPORTUNITIES/tpl/SettingsPage.tpl');
+        $html = $this->ss->fetch('modules/BOARD_OPPORTUNITIES/tpl/SettingsPage.tpl');
         echo $html;
     }
 }

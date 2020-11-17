@@ -38,12 +38,15 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$module_name = 'BORD_OPPORTUNITIES';
-$metafiles[$module_name] = array(
-    'detailviewdefs' => 'modules/' . $module_name . '/metadata/detailviewdefs.php',
-    'editviewdefs' => 'modules/' . $module_name . '/metadata/editviewdefs.php',
-    'listviewdefs' => 'modules/' . $module_name . '/metadata/listviewdefs.php',
-    'searchdefs' => 'modules/' . $module_name . '/metadata/searchdefs.php',
-    'popupdefs' => 'modules/' . $module_name . '/metadata/popupdefs.php',
-    'searchfields' => 'modules/' . $module_name . '/metadata/SearchFields.php',
-);
+ if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+global $mod_strings, $app_strings, $sugar_config,$current_user;
+ 
+if(is_admin($current_user)){
+    $module_menu[]=array('index.php?module=BOARD_OPPORTUNITIES&action=boardSettings', $mod_strings['LNK_SETTINGS'], 'Add', 'BOARD_OPPORTUNITIES');
+}
+if(ACLController::checkAccess('BOARD_OPPORTUNITIES', 'list', true)){
+    $module_menu[]=array('index.php?module=BOARD_OPPORTUNITIES&action=index&return_module=BOARD_OPPORTUNITIES&return_action=DetailView', $mod_strings['LNK_LIST'],'View', 'BOARD_OPPORTUNITIES');
+}

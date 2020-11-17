@@ -38,15 +38,37 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
- if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-
-global $mod_strings, $app_strings, $sugar_config,$current_user;
- 
-if(is_admin($current_user)){
-    $module_menu[]=array('index.php?module=BORD_OPPORTUNITIES&action=boardSettings', $mod_strings['LNK_SETTINGS'], 'Add', 'BORD_OPPORTUNITIES');
-}
-if(ACLController::checkAccess('BORD_OPPORTUNITIES', 'list', true)){
-    $module_menu[]=array('index.php?module=BORD_OPPORTUNITIES&action=index&return_module=BORD_OPPORTUNITIES&return_action=DetailView', $mod_strings['LNK_LIST'],'View', 'BORD_OPPORTUNITIES');
-}
+$dictionary['BOARD_OPPORTUNITIES'] = array(
+    'table' => 'board_opportunities',
+    'audited' => false,
+    'inline_edit' => true,
+    'duplicate_merge' => true,
+    'fields' => array(
+        'id' =>
+            array(
+                'name' => 'id',
+                'vname' => 'LBL_ID',
+                'type' => 'id',
+                'required' => true,
+                'reportable' => true,
+                'comment' => 'Unique identifier',
+                'inline_edit' => false,
+            ),
+        'config' =>
+            array(
+                'name' => 'config',
+                'vname' => 'LBL_CONFIG',
+                'type' => 'text',
+                'comment' => '',
+                'rows' => 6,
+                'cols' => 80,
+            ),
+    ),
+    'relationships' => array(),
+    'optimistic_locking' => true,
+    'unified_search' => true,
+);
+//if (!class_exists('VardefManager')) {
+//        require_once('include/SugarObjects/VardefManager.php');
+//}
+//VardefManager::createVardef('BOARD_OPPORTUNITIES', 'BOARD_OPPORTUNITIES', array('basic','assignable','security_groups'));

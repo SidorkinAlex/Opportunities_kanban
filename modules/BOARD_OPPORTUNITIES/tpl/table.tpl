@@ -137,7 +137,7 @@
 //        //get 30 first entries
 //        for (index = 0; index < configBord['stages'].length; ++index) {
 //            if(configBord['stages'][index]['show']) {
-//                ajax_request('index.php?module=BORD_OPPORTUNITIES&action=getData&where[]=' + configBord.stages[index]['name'] + '&to_pdf=true&limitMax=' + configBord['limitIterationITems'], 'JSON', '', 'setItems');
+//                ajax_request('index.php?module=BOARD_OPPORTUNITIES&action=getData&where[]=' + configBord.stages[index]['name'] + '&to_pdf=true&limitMax=' + configBord['limitIterationITems'], 'JSON', '', 'setItems');
 //                configBord['stages'][index]['loadItems']=configBord['limitIterationITems'];
 //            }
 //        }
@@ -150,7 +150,7 @@
         for (index = 0; index < configBord['stages'].length; ++index) {
             if(configBord['stages'][index]['show']) {
                 var limitMax = configBord['stages'][index]['loadItems'] + configBord['limitIterationITems'];
-                ajax_request('index.php?module=BORD_OPPORTUNITIES&action=getData&where[]=' + configBord.stages[index]['name'] + '&to_pdf=true&limitMin=' + configBord['stages'][index]['loadItems'] + '&limitMax=' + limitMax, 'JSON', '', 'setItems')
+                ajax_request('index.php?module=BOARD_OPPORTUNITIES&action=getData&where[]=' + configBord.stages[index]['name'] + '&to_pdf=true&limitMin=' + configBord['stages'][index]['loadItems'] + '&limitMax=' + limitMax, 'JSON', '', 'setItems')
             }
         }
 
@@ -158,13 +158,13 @@
     function getDataFromStage() {
         for (index = 0; index < configBord['stages'].length; ++index) {
             if(configBord['stages'][index]['show']) {
-                ajax_request('index.php?module=BORD_OPPORTUNITIES&action=getData&where[]=' + configBord.stages[index]['name'] + '&to_pdf=true', 'JSON', '', 'setItems');
+                ajax_request('index.php?module=BOARD_OPPORTUNITIES&action=getData&where[]=' + configBord.stages[index]['name'] + '&to_pdf=true', 'JSON', '', 'setItems');
             }
         }
     }
 
     function getAllStage() {
-        ajax_request('index.php?module=BORD_OPPORTUNITIES&action=getData&to_pdf=true','JSON','','setItems');
+        ajax_request('index.php?module=BOARD_OPPORTUNITIES&action=getData&to_pdf=true','JSON','','setItems');
     }
     function setItems(data) {
         console.log(data);
