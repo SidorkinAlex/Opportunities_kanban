@@ -83,12 +83,14 @@ class BORD_OPPORTUNITIES extends Basic
         global $app_list_strings;
         $bordConfig = $this->getConfig();
         $stages = [];
-        if (!empty($bordConfig['stages'])) {
+        if (!empty($bordConfig['stages']) && count($bordConfig['stages']) == count($app_list_strings['sales_stage_dom'])) {
             for ($i = 0; $i < count($bordConfig['stages']); $i++) {
                 if($bordConfig['stages'][$i]['display']) {
                     $stages[$bordConfig['stages'][$i]['name']] = $app_list_strings['sales_stage_dom'][$bordConfig['stages'][$i]['name']];
                 }
             }
+        } else{
+            header('Location: index.php?module=BORD_OPPORTUNITIES&action=boardSettings');
         }
         return json_encode($stages);
     }
@@ -99,14 +101,14 @@ class BORD_OPPORTUNITIES extends Basic
 
     public function getConfig()
     {
-        $bordConf=[];
-        include 'modules/BORD_OPPORTUNITIES/bord-conf.php';
+        global $current_user;
+        $bordConf=$current_user->getPreference('bordConf');
     return $bordConf;
     }
 
     static function getBordConfig(){
-        $bordConf=[];
-        include 'modules/BORD_OPPORTUNITIES/bord-conf.php';
+        global $current_user;
+        $bordConf=$current_user->getPreference('bordConf');
         return $bordConf;
     }
 

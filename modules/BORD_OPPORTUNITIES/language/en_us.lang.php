@@ -75,4 +75,10 @@ $mod_strings = array (
   'LBL_BORD_OPPORTUNITIES_SUBPANEL_TITLE' => 'OPPORTUNITIES',
   'LBL_NEW_FORM_TITLE' => 'New OPPORTUNITIES',
   'LNK_SETTINGS' => 'Settings',
+  'LBL_SHOW' => 'display colum',
+  'LBL_DISPLAY' => 'display opportunity',
+  'LBL_SAVE' => 'Save',
+  'LBL_CUSTOMIZING_COLUMNS' => 'Сustomizing columns',
+  'LBL_CUSTOMIZING_HEADER_FIELDS' => 'Сustomizing header fields',
+  'LBL_BOARD_COLUMN_HEIGHT' => 'Board column height',
 );
