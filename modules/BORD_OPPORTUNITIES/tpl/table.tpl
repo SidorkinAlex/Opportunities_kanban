@@ -9,10 +9,15 @@
 {*<br />*}
 {*<button id="removeElement">Remove "My Task Test"</button>*}
 <!-- Большие модальное окно -->
-<a class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" id="test_button">test modal</a>
 
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div id="MyModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
+            <div class="modal-header-bar">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
         <div class="modal-content" id="modal-body">
 
         </div>
@@ -21,14 +26,10 @@
 
 <script>
     {literal}
-    $('#test_button').click(function () {
-        loadmodalbody();
 
-    });
-
-    function loadmodalbody() {
+    function loadmodalbody(id) {
         $.ajax({
-            url: 'index.php?module=Opportunities&action=quickDetail&record=16395f63-ff01-5574-8bba-5f37f130e00b',
+            url: 'index.php?module=Opportunities&action=quickDetail&record='+id,
             method: 'post',
             dataType: 'html',
             //data: {text: 'Текст'},
@@ -71,7 +72,10 @@
             enabled: true,
         },
         click: function(el) {
-            console.log("Trigger on all items click!");
+            var id = el.getAttribute('data-idopp');
+            $('#MyModal').modal();
+            loadmodalbody(id);
+
         },
         dropEl: function(el, target, source, sibling){
             var id = el.getAttribute('data-idopp');
@@ -222,6 +226,17 @@
         }
         .drag_handler{
             float: none;
+        }
+        .modal-header-bar{
+            z-index: 1000;
+            position: relative;
+        }
+        .close{
+            padding: 5px;
+            position: absolute;
+            z-index: 1000;
+            right: 10px;
+            top: 20px;
         }
     </style>
 {/literal}
