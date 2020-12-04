@@ -7,6 +7,16 @@
 ![image](http://web-seedteam.ru/wp-content/uploads/2020/12/Снимок-экрана-от-2020-12-04-18-12-29.png)
 ![image](http://web-seedteam.ru/wp-content/uploads/2020/12/Снимок-экрана-от-2020-12-04-18-38-51.png)
 
+## support the project
+https://yoomoney.ru/to/410013242088802
+
+## поддержи проект
+https://yoomoney.ru/to/410013242088802
+
+
+
+#progekt in github
+https://github.com/users/SidorkinAlex/projects/1
 
 ## Installation
 
