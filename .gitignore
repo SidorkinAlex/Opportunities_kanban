@@ -6,7 +6,7 @@ git.php
 # Ignore custom .htaccess stuff.
 /.htaccess
 # Ignore large parts of the annoying cache directory without breaking things.
-cache/*
+cache/*/home/alex/Загрузки/Opportunities_kanban/15.zip
 upload/*
 !upload/index.html
 # Ignore some files and directories from the custom directory.

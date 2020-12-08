@@ -40,7 +40,7 @@ public function action_quickDetail () {
 
 Option 1
 
-To install, you need to download the latest version of the plugin from the link https://github.com/SidorkinAlex/Opportunities_kanban/releases/download/1.00/Opportunities_kanban.zip
+To install, you need to download the latest version of the plugin from the link https://github.com/SidorkinAlex/Opportunities_kanban/releases/download/1.01/Opportunities_kanban.zip
 
 Then in SuiteCRM open the Module Loader (Administration -> Module Loader)
 
@@ -112,7 +112,7 @@ public function action_quickDetail(){
 
 1 вариант
 
-Для установки необходимо скачать последную версию плагина по ссылке https://github.com/SidorkinAlex/Opportunities_kanban/releases/download/1.00/Opportunities_kanban.zip
+Для установки необходимо скачать последную версию плагина по ссылке https://github.com/SidorkinAlex/Opportunities_kanban/releases/download/1.01/Opportunities_kanban.zip
 
 Далее в SuiteCRM открыть Загрузчик модулей (Администрирование -> Загрузчик модулей)
 
