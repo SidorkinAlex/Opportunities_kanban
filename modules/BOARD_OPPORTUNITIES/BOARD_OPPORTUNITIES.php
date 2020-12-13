@@ -196,8 +196,9 @@ class BOARD_OPPORTUNITIES extends Basic
             }
         }
         $filter=array (
-            'sales_stage' => true,
+            'sales_stage',
         );
+        $filter=array_merge($filter,$bordConfig['mainFields']);
         $params=array (
             'massupdate' => true,
             'orderBy' => 'DATE_ENTERED',
@@ -223,19 +224,28 @@ class BOARD_OPPORTUNITIES extends Basic
             $singleSelect,
             $ifListForExport
         );
-        $mainFields= '`opportunities`.' . implode(', " " ,`opportunities`.',$bordConfig['mainFields']);
+        //$mainFields= '`opportunities`.' . implode(', " " ,`opportunities`.',$bordConfig['mainFields']);
         //print_array($create_new_list_query);
-        $create_new_list_query['select']=' SELECT opportunities.`id` as `opportunities_id`, CONCAT(' . $mainFields . ') as `opportunities_name`, opportunities.`sales_stage` as `opportunities_sales_stage`';
+        //$create_new_list_query['select']=' SELECT opportunities.`id` as `opportunities_id`, CONCAT(' . $mainFields . ') as `opportunities_name`, opportunities.`sales_stage` as `opportunities_sales_stage`';
         //print_array($create_new_list_query['select'] . $create_new_list_query['from'] . $create_new_list_query['where'] . $create_new_list_query['order_by']);
         $sql=$create_new_list_query['select'] . $create_new_list_query['from'] . $create_new_list_query['where'] . $create_new_list_query['order_by'];
         $sql=$sql . "\n {$LIMIT}";
         $result=$db->query($sql,1);
         $data=[];
         while ($row = $db->fetchByAssoc($result)) {
-            $data[$row['opportunities_sales_stage']][]=[
-                'id' => $row['opportunities_id'],
-                'opportunities_name' => $row['opportunities_name'],
-                'opportunities_sales_stage' => $row['opportunities_sales_stage'],
+            $name='';
+            foreach ($bordConfig['mainFields'] as $key => $fieldName){
+                if(!empty($row[$fieldName])){
+                    $name .= ' '.$row[$fieldName];
+                }
+                else{
+                    $name.='';
+                }
+            }
+            $data[$row['sales_stage']][]=[
+                'id' => $row['id'],
+                'opportunities_name' => $name,
+                'opportunities_sales_stage' => $row['sales_stage'],
             ];
         }
         return $data;
