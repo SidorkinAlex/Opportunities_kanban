@@ -38,9 +38,8 @@ public function action_quickDetail () {
 ```
 
 
-Option 1
 
-To install, you need to download the latest version of the plugin from the link https://github.com/SidorkinAlex/Opportunities_kanban/releases/download/1.01/Opportunities_kanban.zip
+To install, you need to download the latest version of the plugin from the link https://github.com/SidorkinAlex/Opportunities_kanban/releases/download/1.02/Opportunities_kanban.zip
 
 Then in SuiteCRM open the Module Loader (Administration -> Module Loader)
 
@@ -48,11 +47,6 @@ Download package archive
 
 Click the install button.
 
-Option 2:
-
-download sclog the project (``` git clone https://github.com/SidorkinAlex/Opportunities_kanban.git```) or download it in a zip archive.
-
-Copy project folders to SuiteCRM root
 
 ## Setting
 After installing the package, go to the Opportunities Board module
@@ -110,21 +104,14 @@ public function action_quickDetail(){
 ```
 
 
-1 вариант
 
-Для установки необходимо скачать последную версию плагина по ссылке https://github.com/SidorkinAlex/Opportunities_kanban/releases/download/1.01/Opportunities_kanban.zip
+Для установки необходимо скачать последную версию плагина по ссылке https://github.com/SidorkinAlex/Opportunities_kanban/releases/download/1.02/Opportunities_kanban.zip
 
 Далее в SuiteCRM открыть Загрузчик модулей (Администрирование -> Загрузчик модулей)
 
 Загрузить архив с пакетом
 
 Нажать кнопку установить.
-
-2 вариант:
-
-скачать склогировать проект(```git clone https://github.com/SidorkinAlex/Opportunities_kanban.git```) или скачать его зип архивом.
-
-Скопировать папки проекта в корень SuiteCRM
 
 ## Натройка
 После установки пакета переходим в модуль Opportunities Board
