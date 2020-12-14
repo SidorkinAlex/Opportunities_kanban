@@ -49,9 +49,7 @@ class boardSettingsView
         $option_fields=[];
         $module_strings = return_module_language($current_language, 'Opportunities');
         foreach ($seedOpportunity->field_name_map as $field_name => $field_arr){
-            if(key_exists($field_arr['type'],['link',''])
-            || ( !empty($field_arr['source']) && $field_arr['source'] == 'non-db')
-            ){
+            if(key_exists($field_arr['type'],['link',''])){
                 continue;
             }
             $fields[]=$field_arr['name'];
