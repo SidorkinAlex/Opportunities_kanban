@@ -22,24 +22,7 @@ https://github.com/users/SidorkinAlex/projects/1
 
 Before installation, you must make a backup copy of the system files!
 
-The package contains the file custom/modules/Opportunities/controller.php, if this file exists in your project, then it must be removed from the package by inserting the custom / modules / Opportunities / controller.php file into the suva file immediately after the lines 
-
-```
- class CustomOpportunitiesController extends SugarController
-{
-```
-
-following code:
-
-``` php
-public function action_quickDetail () {
-         $ this-> view = 'detail';
-     }
-```
-
-
-
-To install, you need to download the latest version of the plugin from the link https://github.com/SidorkinAlex/Opportunities_kanban/releases/download/1.02/Opportunities_kanban.zip
+To install, you need to download the latest version of the plugin from the link https://github.com/SidorkinAlex/Opportunities_kanban/releases/download/1.03/Build_1_03.zip
 
 Then in SuiteCRM open the Module Loader (Administration -> Module Loader)
 
@@ -91,21 +74,7 @@ MIT
 
 Перед установкой необходимо сделать резервную копию файлов системы!
 
-В пакете содержится файл custom/modules/Opportunities/controller.php если у вас в проектк существует данный файл, то его необходимо удалить из пакета вставив в сувой файл custom/modules/Opportunities/controller.php сразу после строк 
-
-```class CustomOpportunitiesController extends SugarController
-{
-```
-следующий код:
-``` php
-public function action_quickDetail(){
-         $this->view = 'detail';
-     }
-```
-
-
-
-Для установки необходимо скачать последную версию плагина по ссылке https://github.com/SidorkinAlex/Opportunities_kanban/releases/download/1.02/Opportunities_kanban.zip
+Для установки необходимо скачать последную версию плагина по ссылке https://github.com/SidorkinAlex/Opportunities_kanban/releases/download/1.03/Build_1_03.zip
 
 Далее в SuiteCRM открыть Загрузчик модулей (Администрирование -> Загрузчик модулей)
 
