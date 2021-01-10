@@ -27,7 +27,7 @@ $manifest = array (
     'name' => 'Opportunities Board',
     'published_date' => '2020-08-216 09:10:55',
     'type' => 'module',
-    'version' => '1.0.0',
+    'version' => '1.0.3',
     'remove_tables' => 'prompt',
 );
 

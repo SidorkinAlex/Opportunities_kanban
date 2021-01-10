@@ -19,6 +19,7 @@
             </div>
 
         <div class="modal-content" id="modal-body">
+            <iframe src="" frameborder="0" id="iframemodal"></iframe>
 
         </div>
     </div>
@@ -26,17 +27,11 @@
 
 <script>
     {literal}
-
+//index.php?module=Opportunities&offset=2&noMenu=1609856071013711200&return_module=Opportunities&action=record=73da683f-d986-ea4d-4d25-5f37f15bac71
     function loadmodalbody(id) {
-        $.ajax({
-            url: 'index.php?module=Opportunities&action=quickDetail&record='+id,
-            method: 'post',
-            dataType: 'html',
-            //data: {text: 'Текст'},
-            success: function(data){
-                $('#modal-body').html(data);
-            }
-        });
+        $("#iframemodal").attr("src" , 'index.php?module=Opportunities&hiddenMenu=1&action=DetailView&record='+id);
+        var heightWindow = window.innerHeight - 0.1 * window.innerHeight;
+        $("#iframemodal").innerHeight(heightWindow);
     }
     {/literal}
     var configBord = {$bordConfig|@json_encode};
@@ -237,6 +232,10 @@
             z-index: 1000;
             right: 10px;
             top: 20px;
+        }
+        #iframemodal {
+            width: 100%;
+            height: 100%;
         }
     </style>
 {/literal}
