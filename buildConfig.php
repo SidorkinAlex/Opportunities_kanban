@@ -38,6 +38,10 @@ $path_arr_for_build = array(
         'from' => 'manifest.php',
         'to' => 'manifest.php',
     ),
+    9 => array(
+        'from' => 'custom/Extension/modules/Administration/Ext',
+        'to' => 'SugarModules/custom/Extension/modules/Administration/Ext',
+    ),
 );
 
 return $path_arr_for_build;
