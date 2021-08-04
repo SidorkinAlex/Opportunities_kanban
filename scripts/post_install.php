@@ -5,6 +5,9 @@
  * Date: 17.11.20
  * Time: 18:37
  */
-$cfg = new Configurator();
-$cfg->config['addAjaxBannedModules'][] = 'BOARD_OPPORTUNITIES';
-$cfg->saveConfig();
+function post_install()
+{
+    $cfg = new Configurator();
+    $cfg->config['addAjaxBannedModules'][] = 'BOARD_OPPORTUNITIES';
+    $cfg->saveConfig();
+}
