@@ -49,4 +49,13 @@ class CustomBOARD_OPPORTUNITIESController extends SugarController
         $seedOpp = new BOARD_OPPORTUNITIES();
         $seedOpp->getDataOpp($whereArr,$limitIntervalMin,$limitIntervalMax);
     }
+
+    public function action_moduleSettingsViews(){
+        /* global $current_user;
+        require_once "modules/BOARD_OPPORTUNITIES/views/view.moduleSettingsViews.php";
+        $view = new ModuleSettingsViews($current_user);
+        $view->display();
+        */
+        $this->view = "moduleSettingsViews";
+    }
 }
