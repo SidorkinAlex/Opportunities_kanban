@@ -42,6 +42,10 @@ $path_arr_for_build = array(
         'from' => 'custom/Extension/modules/Administration/Ext',
         'to' => 'SugarModules/custom/Extension/modules/Administration/Ext',
     ),
+    10 => array(
+        'from' => 'custom/include/lib/bootstrap_select',
+        'to' => 'SugarModules/custom/include/lib/bootstrap_select/',
+    ),
 );
 
 return $path_arr_for_build;
