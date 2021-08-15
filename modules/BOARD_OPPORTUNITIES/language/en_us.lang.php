@@ -81,4 +81,5 @@ $mod_strings = array (
   'LBL_CUSTOMIZING_COLUMNS' => 'Сustomizing columns',
   'LBL_CUSTOMIZING_HEADER_FIELDS' => 'Сustomizing header fields',
   'LBL_BOARD_COLUMN_HEIGHT' => 'Board column height',
+  'LBL_SELECTED_MODULE' => 'Select the modules for which you want to display the kanban board',
 );
