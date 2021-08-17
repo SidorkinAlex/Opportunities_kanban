@@ -1,9 +1,21 @@
-<form action="index.php?module=BOARD_OPPORTUNITIES&action=saveModuleSattings" method="post">
+{if $alert}
+<div class="bg-green cont-1" id="message_alert">
+  <h3>{$alert}</h3>
+    {literal}
+    <script>
+        setTimeout(function (){
+            $('#message_alert').hide();
+        },5000);
+    </script>
+    {/literal}
+</div>
+{/if}
+<form action="index.php?module=BOARD_OPPORTUNITIES&action=saveModuleSettings" method="post">
     <h3 class="module-title-text">{$MOD.LBL_SELECTED_MODULE}</h3>
     <div>
         <div class="col-xs-12 col-sm-6 edit-view-row-item">
              <div class="col-xs-12 col-sm-8 edit-view-field ">
-                 <select type="text" name="moduleList" id="moduleList" class="selectpicker" data-live-search="true" multiple>
+                 <select type="text" name="moduleList[]" id="moduleList" class="selectpicker" data-live-search="true" multiple>
                     {$moduleList}
                  </select>
             </div>
@@ -20,6 +32,7 @@
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="custom/include/lib/bootstrap_select/css/bootstrap-select.min.css">
+<link rel="stylesheet" href="modules/BOARD_OPPORTUNITIES/src/css/include.css">
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="custom/include/lib/bootstrap_select/js/bootstrap-select.min.js"></script>

@@ -50,4 +50,17 @@ class CustomBOARD_OPPORTUNITIESController extends SugarController
         $seedOpp->getDataOpp($whereArr,$limitIntervalMin,$limitIntervalMax);
     }
 
+    public function action_saveModuleSettings()
+    {
+        global $mod_strings;
+        require_once 'modules/BOARD_OPPORTUNITIES/ConfigTables.php';
+        $configTables = new \SuiteCRM\Modules\BOARD_OPPORTUNITIES\ConfigTables();
+        $moduleList=[];
+        if(isset($_REQUEST['moduleList'])) {
+            $moduleList =  $_REQUEST['moduleList'];
+        }
+            $configTables->setValue('BOARD_OPPORTUNITIES', 'moduleList', $moduleList);
+        header("Location: index.php?module=BOARD_OPPORTUNITIES&action=moduleSettingsViews&message={$mod_strings['LBL_SAVE_SETTINGS']}");
+    }
+
 }
