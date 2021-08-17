@@ -1,6 +1,6 @@
 {if $alert}
-<div class="bg-green cont-1" id="message_alert">
-  <h3>{$alert}</h3>
+<div class="alert alert-success" id="message_alert">
+  {$alert}
     {literal}
     <script>
         setTimeout(function (){
@@ -29,6 +29,7 @@
         <button type="submit" class="button ">{$MOD.LBL_SAVE}</button>
     </div>
 </form>
+<div style="height: 150px;"></div>
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="custom/include/lib/bootstrap_select/css/bootstrap-select.min.css">
