@@ -46,6 +46,10 @@ $path_arr_for_build = array(
         'from' => 'custom/include/lib/bootstrap_select',
         'to' => 'SugarModules/custom/include/lib/bootstrap_select/',
     ),
+    11 => array(
+        'from' => 'custom/Extension/application/Ext/LogicHooks/BOARD_Kanban_Board_JS_UI_HOOK.php',
+        'to' => 'SugarModules/custom/Extension/application/Ext/LogicHooks/BOARD_Kanban_Board_JS_UI_HOOK.php',
+    ),
 );
 
 return $path_arr_for_build;
