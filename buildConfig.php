@@ -50,6 +50,10 @@ $path_arr_for_build = array(
         'from' => 'custom/Extension/application/Ext/LogicHooks/BOARD_Kanban_Board_JS_UI_HOOK.php',
         'to' => 'SugarModules/custom/Extension/application/Ext/LogicHooks/BOARD_Kanban_Board_JS_UI_HOOK.php',
     ),
+    12 => array(
+        'from' => 'custom/include/language/en_us.lang.php',
+        'to' => 'SugarModules/custom/include/language/en_us.lang.php',
+    ),
 );
 
 return $path_arr_for_build;

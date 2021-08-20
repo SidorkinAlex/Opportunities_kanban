@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    alert('HI!');
+    //alert('HI!');
     var params = window
         .location
         .search
@@ -14,6 +14,8 @@ $(document).ready(function () {
             {}
         );
     var sleep_after_load = false;
+    //require('cache/jsLanguage/en_us.js');
+    var buttonName = SUGAR.language.get('app_list_strings','kanban_board').LBL_BUTTON_MENU;
     if(params.action == "ajaxui") {
         sleep_after_load = true;
         var anc = decodeURIComponent(window.location.hash.replace("#", ""));
@@ -21,31 +23,22 @@ $(document).ready(function () {
         params = url;
     }
 
-
-
-    // if (!inAjaxUI) {
-    //     if (!SUGAR.isIE)
-    //         window.location.replace("index.php?action=ajaxui#ajaxUILoc=" + encodeURIComponent(url)); else {
-    //         window.location.hash = "#";
-    //         window.location.assign("index.php?action=ajaxui#ajaxUILoc=" + encodeURIComponent(url));
-    //     }
-    // }
     if (sleep_after_load){
         setTimeout(function (){
-            show_button(params);
+            show_button(params,buttonName);
         });
     } else {
-        show_button(params);
+        show_button(params,buttonName);
     }
 });
 
-function show_button(params){
+function show_button(params,buttonName){
     $('#actionMenuSidebar ul').append("<li class=\"actionmenulinks\" role=\"presentation\">\n" +
-        "                                                <a href=\"index.php?module=BOARD_OPPORTUNITIES&amp;action=index&amp;recipient_module=" + params.module + "&amp;return_module=Contacts&amp;return_action=index\" data-action-name=\"Import\">\n" +
+        "                                                <a href=\"index.php?module=BOARD_OPPORTUNITIES&amp;action=index&amp;recipient_module=" + params.module + "&amp;\" data-action-name=\"BOARD_OPPORTUNITIES\">\n" +
         "                                                    <div class=\"side-bar-action-icon\">\n" +
-        "                                                        <span class=\"suitepicon suitepicon-action-import\"></span>\n" +
+        "                                                        <span class=\"suitepicon suitepicon-action-vcard\"></span>\n" +
         "                                                    </div>\n" +
-        "                                                    <div class=\"actionmenulink\"></div>\n" +
+        "                                                    <div class=\"actionmenulink\">" + buttonName + "</div>\n" +
         "                                                </a>\n" +
         "                                            </li>");
 }
