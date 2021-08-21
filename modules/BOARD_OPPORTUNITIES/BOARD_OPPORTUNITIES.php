@@ -63,6 +63,7 @@ class BOARD_OPPORTUNITIES extends Basic
     public $assigned_user_name;
     public $assigned_user_link;
     public $SecurityGroups;
+    public $boardForModule;
     const STAP_LIMIT=30;
 	
     public function bean_implements($interface)
@@ -74,6 +75,10 @@ class BOARD_OPPORTUNITIES extends Basic
         }
 
         return false;
+    }
+
+    public function setModule(string $moduleName){
+
     }
     /**
      * @return JSON Sales Stage from Opportunities
