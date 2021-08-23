@@ -6,13 +6,18 @@
  * Time: 14:44
  */
 
-
+require_once 'modules/BOARD_OPPORTUNITIES/ConfigTables.php';
 class BOARD_OPPORTUNITIESViewList extends ViewList
 {
 
     public function listViewProcess()
     {
-        if(!empty($_REQUEST['recipient_module']) ){
+        $configTables = new \SuiteCRM\Modules\BOARD_OPPORTUNITIES\ConfigTables();
+        if(!empty($_REQUEST['recipient_module'])
+            && in_array($_REQUEST['recipient_module'],
+                        $configTables->getValue('BOARD_OPPORTUNITIES', 'moduleList')
+            )
+        ){
 
             $this->processSearchForm();
             $this->lv->searchColumns = $this->searchForm->searchColumns;
@@ -21,18 +26,19 @@ class BOARD_OPPORTUNITIESViewList extends ViewList
                 return;
             }
             $seedKanbanBoard = new BOARD_OPPORTUNITIES();
-            //stopped hear
-            /* далее нужно ввести переменную с наименованием модуля и адаптировать формирование запросов для выбранного модуля */
-            $countOpp = $seedKanbanBoard->getCountOpp();
-            print_array($countOpp);
-            print_array('$countOpp');
+            $seedKanbanBoard->setModule($_REQUEST['recipient_module']);
+
+            $countRecord = $seedKanbanBoard->getCountBean();
+
+
+
             $this->lv->ss->assign("STAGES", $seedKanbanBoard->getStages());
-            print_array('$seedKanbanBoard->getStages()');
-            print_array($seedKanbanBoard->getStages());
+            //stopped hear
+
             $this->lv->ss->assign("bordConfig", $seedKanbanBoard->getConfig());
             print_array('$seedKanbanBoard->getConfig()');
             print_array($seedKanbanBoard->getConfig());
-            $this->lv->ss->assign("countOpp", $countOpp);
+            $this->lv->ss->assign("countRecord", $countRecord);
             if (empty($_REQUEST['search_form_only']) || $_REQUEST['search_form_only'] == false) {
                 $this->lv->ss->assign("SEARCH", true);
                 $this->lv->ss->assign('savedSearchData', $this->searchForm->getSavedSearchData());

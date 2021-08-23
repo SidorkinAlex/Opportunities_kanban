@@ -36,7 +36,7 @@
     {/literal}
     var configBord = {$bordConfig|@json_encode};
     var stages={$STAGES};
-    var countOpp={$countOpp};
+    var countRecord={$countRecord};
     {literal}
     var bordsData=[];
     var counter=0;
@@ -118,13 +118,13 @@
 
 
     $(document).ready(function () {
-        if(countOpp < 100){
+        if(countRecord < 100){
             getAllStage();
         }
-        if(countOpp >= 100  ){
+        if(countRecord >= 100  ){
             getDataFromStage();
         }
-//        if(countOpp >= 1000){
+//        if(countRecord >= 1000){
 //            getDataFromStageLimit();
 //        }
     });

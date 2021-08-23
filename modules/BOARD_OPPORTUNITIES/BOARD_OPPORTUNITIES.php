@@ -63,7 +63,10 @@ class BOARD_OPPORTUNITIES extends Basic
     public $assigned_user_name;
     public $assigned_user_link;
     public $SecurityGroups;
-    public $boardForModule;
+    public $boardForModuleBeanName;
+    public SugarBean $recipientBean;
+    public string $boardForModuleKey;
+    public \SuiteCRM\Modules\BOARD_OPPORTUNITIES\ModuleConfig $bordConfModule;
     const STAP_LIMIT=30;
 	
     public function bean_implements($interface)
@@ -78,7 +81,11 @@ class BOARD_OPPORTUNITIES extends Basic
     }
 
     public function setModule(string $moduleName){
-
+        global $beanList;
+        global $beanFiles;
+        $this->boardForModuleKey = $moduleName;
+        $this->initRecipientBeanName($moduleName);
+        $this->initRecipientBeanObect();
     }
     /**
      * @return JSON Sales Stage from Opportunities
@@ -86,12 +93,12 @@ class BOARD_OPPORTUNITIES extends Basic
     public function getStages()
     {
         global $app_list_strings;
-        $bordConfig = $this->getConfig();
+        $this->checkOrInitBordFonfModule();
         $stages = [];
-        if (!empty($bordConfig['stages']) && count($bordConfig['stages']) == count($app_list_strings['sales_stage_dom'])) {
-            for ($i = 0; $i < count($bordConfig['stages']); $i++) {
-                if($bordConfig['stages'][$i]['display']) {
-                    $stages[$bordConfig['stages'][$i]['name']] = $app_list_strings['sales_stage_dom'][$bordConfig['stages'][$i]['name']];
+        if (!empty($this->bordConfModule->stages) && count($this->bordConfModule->stages) == count($app_list_strings[$this->recipientBean->field_defs->{$this->bordConfModule->stages_field}->options])) {
+            for ($i = 0; $i < count($this->bordConfModule->stages); $i++) {
+                if($this->bordConfModule->stages[$i]['display']) {
+                    $stages[$this->bordConfModule->stages[$i]['name']] = $app_list_strings[$this->recipientBean->field_defs->{$this->bordConfModule->stages_field}->options][$this->bordConfModule->stages[$i]['name']];
                 }
             }
         } else{
@@ -117,6 +124,69 @@ class BOARD_OPPORTUNITIES extends Basic
         return $bordConf;
     }
 
+    private function checkOrInitBordFonfModule(){
+        global $current_user;
+        if(!isset($this->bordConfModule)) {
+            $bordConf = new \SuiteCRM\Modules\BOARD_OPPORTUNITIES\BOARD_USER_CONFIG($current_user);
+            $this->bordConfModule = $bordConf->getConfigFromModule($this->boardForModuleKey);
+        }
+}
+
+    public function getCountBean(){
+        global $db;
+        global $current_user;
+        $sow_stage=[];
+        $this->checkOrInitBordFonfModule();
+
+        foreach ($this->bordConfModule->stages as $stage) {
+            if($stage['show'] === true){
+                $sow_stage[]=$stage['name'];
+            }
+        }
+        $order_by="{$this->bordConfModule->order_by} DESC";
+        $order_by="{$this->bordConfModule->stages_field} DESC";
+        if($sow_stage) {
+            $in = "'" . implode("','",$sow_stage) . "'";
+            $where = "({$this->recipientBean->table_name}.{$this->bordConfModule->stages_field} in ({$in}))";
+        }
+        $filter=array (
+            $this->bordConfModule->stages_field => true,
+        );
+        $params=array (
+            //'massupdate' => true,
+            //'orderBy' => strtoupper(),
+          //  'overrideOrder' => true,
+          //  'sortOrder' => 'DESC',
+        );
+        $show_deleted=0;
+        $join_type='';
+        $return_array=true;
+        $singleSelect=true;
+        $ifListForExport=false;
+
+
+        $create_new_list_query=$this->recipientBean->create_new_list_query(
+            $order_by,
+            $where,
+            $filter,
+            $params,
+            $show_deleted,
+            $join_type,
+            $return_array,
+            $this->recipientBean,
+            $singleSelect,
+            $ifListForExport
+        );
+
+        $sql=$create_new_list_query['select'] . $create_new_list_query['from'] . $create_new_list_query['where'] . $create_new_list_query['order_by'];
+        $count = $this->recipientBean->create_list_count_query($sql);
+        $result = $db->getOne($sql,1);
+        return $result;
+    }
+
+    /** delete after release
+     * @return array|false
+     */
     public function getCountOpp(){
         global $db;
         $stage=[];
@@ -254,5 +324,32 @@ class BOARD_OPPORTUNITIES extends Basic
             ];
         }
         return $data;
+    }
+
+    /**
+     * @param string $moduleName
+     * @throws Exception
+     */
+    private function initRecipientBeanName(string $moduleName):void
+    {
+        if(!empty($beanList[$moduleName])) {
+            $this->boardForModuleBeanName = $beanList[$moduleName];
+        } else {
+            throw new Exception('not found in $beanList key '. $moduleName, 500);
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function initRecipientBeanObect():void
+    {
+        global $beanFiles;
+        if(file_exists($beanFiles[$this->boardForModuleBeanName])){
+            require_once $beanFiles[$this->boardForModuleBeanName];
+        } else {
+            throw new Exception('$beanFiles from object '.$this->boardForModuleBeanName. 'not found',500);
+        }
+        $this->recipientBean = new $this->boardForModuleBeanName();
     }
 }
