@@ -81,8 +81,6 @@ class BOARD_OPPORTUNITIES extends Basic
     }
 
     public function setModule(string $moduleName){
-        global $beanList;
-        global $beanFiles;
         $this->boardForModuleKey = $moduleName;
         $this->initRecipientBeanName($moduleName);
         $this->initRecipientBeanObect();
@@ -95,10 +93,10 @@ class BOARD_OPPORTUNITIES extends Basic
         global $app_list_strings;
         $this->checkOrInitBordFonfModule();
         $stages = [];
-        if (!empty($this->bordConfModule->stages) && count($this->bordConfModule->stages) == count($app_list_strings[$this->recipientBean->field_defs->{$this->bordConfModule->stages_field}->options])) {
+        if (!empty($this->bordConfModule->stages) && count($this->bordConfModule->stages) == count($app_list_strings[$this->recipientBean->field_defs[$this->bordConfModule->stages_field]['options']])) {
             for ($i = 0; $i < count($this->bordConfModule->stages); $i++) {
                 if($this->bordConfModule->stages[$i]['display']) {
-                    $stages[$this->bordConfModule->stages[$i]['name']] = $app_list_strings[$this->recipientBean->field_defs->{$this->bordConfModule->stages_field}->options][$this->bordConfModule->stages[$i]['name']];
+                    $stages[$this->bordConfModule->stages[$i]['name']] = $app_list_strings[$this->recipientBean->field_defs[$this->bordConfModule->stages_field]['options']][$this->bordConfModule->stages[$i]['name']];
                 }
             }
         } else{
@@ -111,6 +109,11 @@ class BOARD_OPPORTUNITIES extends Basic
 
     }
 
+    public function getBoardConfigArray()
+    {
+        $this->checkOrInitBordFonfModule();
+        return $this->bordConfModule->getValueArray();
+    }
     public function getConfig()
     {
         global $current_user;
@@ -143,7 +146,7 @@ class BOARD_OPPORTUNITIES extends Basic
                 $sow_stage[]=$stage['name'];
             }
         }
-        $order_by="{$this->bordConfModule->order_by} DESC";
+        $order_by="{$this->recipientBean->table_name}.{$this->bordConfModule->order_by} DESC";
         $order_by="{$this->bordConfModule->stages_field} DESC";
         if($sow_stage) {
             $in = "'" . implode("','",$sow_stage) . "'";
@@ -180,7 +183,7 @@ class BOARD_OPPORTUNITIES extends Basic
 
         $sql=$create_new_list_query['select'] . $create_new_list_query['from'] . $create_new_list_query['where'] . $create_new_list_query['order_by'];
         $count = $this->recipientBean->create_list_count_query($sql);
-        $result = $db->getOne($sql,1);
+        $result = $db->getOne($count,1);
         return $result;
     }
 
@@ -332,6 +335,7 @@ class BOARD_OPPORTUNITIES extends Basic
      */
     private function initRecipientBeanName(string $moduleName):void
     {
+        global $beanList;
         if(!empty($beanList[$moduleName])) {
             $this->boardForModuleBeanName = $beanList[$moduleName];
         } else {

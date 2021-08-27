@@ -35,21 +35,17 @@ class BOARD_OPPORTUNITIESViewList extends ViewList
             $this->lv->ss->assign("STAGES", $seedKanbanBoard->getStages());
             //stopped hear
 
-            $this->lv->ss->assign("bordConfig", $seedKanbanBoard->getConfig());
-            print_array('$seedKanbanBoard->getConfig()');
-            print_array($seedKanbanBoard->getConfig());
+            $this->lv->ss->assign("bordConfig", $seedKanbanBoard->bordConfModule->getValueArray());
             $this->lv->ss->assign("countRecord", $countRecord);
             if (empty($_REQUEST['search_form_only']) || $_REQUEST['search_form_only'] == false) {
                 $this->lv->ss->assign("SEARCH", true);
                 $this->lv->ss->assign('savedSearchData', $this->searchForm->getSavedSearchData());
-                print_array('$this->searchForm->getSavedSearchData()');
-                print_array($this->searchForm->getSavedSearchData());
                 $this->lv->setup($this->seed, 'modules/BOARD_OPPORTUNITIES/tpl/table.tpl', $this->where, $this->params);
                 $savedSearchName = empty($_REQUEST['saved_search_select_name']) ? '' : (' - ' . $_REQUEST['saved_search_select_name']);
                 echo $this->lv->display();
             }
         } else {
-
+            print_array('error');
         }
     }
 }
