@@ -100,7 +100,7 @@ class BOARD_OPPORTUNITIES extends Basic
                 }
             }
         } else{
-            header('Location: index.php?module=BOARD_OPPORTUNITIES&action=boardSettings');
+            header('Location: index.php?module=BOARD_OPPORTUNITIES&action=boardSettings&recipient_module='. $this->boardForModuleKey .'#'.$this->boardForModuleKey);
         }
         return json_encode($stages);
     }
@@ -140,51 +140,54 @@ class BOARD_OPPORTUNITIES extends Basic
         global $current_user;
         $sow_stage=[];
         $this->checkOrInitBordFonfModule();
-
-        foreach ($this->bordConfModule->stages as $stage) {
-            if($stage['show'] === true){
-                $sow_stage[]=$stage['name'];
+        if(!empty($this->bordConfModule->stages)) {
+            foreach ($this->bordConfModule->stages as $stage) {
+                if ($stage['show'] === true) {
+                    $sow_stage[] = $stage['name'];
+                }
             }
+            $order_by = "{$this->recipientBean->table_name}.{$this->bordConfModule->order_by} DESC";
+            $order_by = "{$this->bordConfModule->stages_field} DESC";
+            if ($sow_stage) {
+                $in = "'" . implode("','", $sow_stage) . "'";
+                $where = "({$this->recipientBean->table_name}.{$this->bordConfModule->stages_field} in ({$in}))";
+            }
+            $filter = array(
+                $this->bordConfModule->stages_field => true,
+            );
+            $params = array(
+                //'massupdate' => true,
+                //'orderBy' => strtoupper(),
+                //  'overrideOrder' => true,
+                //  'sortOrder' => 'DESC',
+            );
+            $show_deleted = 0;
+            $join_type = '';
+            $return_array = true;
+            $singleSelect = true;
+            $ifListForExport = false;
+
+
+            $create_new_list_query = $this->recipientBean->create_new_list_query(
+                $order_by,
+                $where,
+                $filter,
+                $params,
+                $show_deleted,
+                $join_type,
+                $return_array,
+                $this->recipientBean,
+                $singleSelect,
+                $ifListForExport
+            );
+
+            $sql = $create_new_list_query['select'] . $create_new_list_query['from'] . $create_new_list_query['where'] . $create_new_list_query['order_by'];
+            $count = $this->recipientBean->create_list_count_query($sql);
+            $result = $db->getOne($count, 1);
+            return $result;
+        } else {
+            return 0;
         }
-        $order_by="{$this->recipientBean->table_name}.{$this->bordConfModule->order_by} DESC";
-        $order_by="{$this->bordConfModule->stages_field} DESC";
-        if($sow_stage) {
-            $in = "'" . implode("','",$sow_stage) . "'";
-            $where = "({$this->recipientBean->table_name}.{$this->bordConfModule->stages_field} in ({$in}))";
-        }
-        $filter=array (
-            $this->bordConfModule->stages_field => true,
-        );
-        $params=array (
-            //'massupdate' => true,
-            //'orderBy' => strtoupper(),
-          //  'overrideOrder' => true,
-          //  'sortOrder' => 'DESC',
-        );
-        $show_deleted=0;
-        $join_type='';
-        $return_array=true;
-        $singleSelect=true;
-        $ifListForExport=false;
-
-
-        $create_new_list_query=$this->recipientBean->create_new_list_query(
-            $order_by,
-            $where,
-            $filter,
-            $params,
-            $show_deleted,
-            $join_type,
-            $return_array,
-            $this->recipientBean,
-            $singleSelect,
-            $ifListForExport
-        );
-
-        $sql=$create_new_list_query['select'] . $create_new_list_query['from'] . $create_new_list_query['where'] . $create_new_list_query['order_by'];
-        $count = $this->recipientBean->create_list_count_query($sql);
-        $result = $db->getOne($count,1);
-        return $result;
     }
 
     /** delete after release

@@ -6,6 +6,8 @@
  * Date: 14.10.20
  * Time: 18:49
  */
+require_once 'modules/BOARD_OPPORTUNITIES/BOARD_USER_CONFIG.php';
+
 class boardSettingsView
 {
     public $ss;
@@ -27,6 +29,7 @@ class boardSettingsView
     {
         global $app_list_strings;
         global $current_language;
+        global $current_user;
         $seedBORD = new BOARD_OPPORTUNITIES();
         $seedOpportunity = BeanFactory::newBean('Opportunities');
         $config = $seedBORD->getConfig();
@@ -55,7 +58,28 @@ class boardSettingsView
             $fields[]=$field_arr['name'];
             $option_fields[$field_arr['name']] = $module_strings[$field_arr['vname']];
         }
-        $this->ss->assign('optionFilds', $option_fields);
+        //start in work
+        $BOARD_USER_CONFIG = new \SuiteCRM\Modules\BOARD_OPPORTUNITIES\BOARD_USER_CONFIG($current_user);
+        $BOARD_CONFIG = new \SuiteCRM\Modules\BOARD_OPPORTUNITIES\BOARD_CONFIG();
+        $moduleListKanban = $BOARD_CONFIG->getModulesList();
+        $fieldListFromStages=[];
+        foreach ($moduleListKanban as $modulename){
+            $beanModule = BeanFactory::newBean($modulename);
+            $module_labels = return_module_language($current_language, $beanModule->module_dir);
+            foreach ($beanModule->field_defs as $field) {
+                if($field['type'] == 'enum') {
+                    $fieldListFromStages[$modulename][$field['name']] = ['name' => $field['name'], 'LBL' => $module_labels[$field['vname']], 'option' =>$field['options']];
+                }
+            }
+        }
+        //print_array($fieldListFromStages);
+        $this->ss->assign('moduleListKanban', $moduleListKanban);
+        $this->ss->assign('moduleListKanbanHasConfig', array_keys($BOARD_USER_CONFIG->moduleConfigCollection));
+        $this->ss->assign('moduleConfigCollection', $BOARD_USER_CONFIG->moduleConfigCollection);
+        $this->ss->assign('activeModule', $_REQUEST['recipient_module']);
+        $this->ss->assign('fieldListFromStages', $fieldListFromStages);
+        $this->ss->assign('optionFields', $option_fields);
+        //end in work
         $this->ss->assign('config', $config);
         $this->ss->assign('fieldNameMap', $fields);
 
