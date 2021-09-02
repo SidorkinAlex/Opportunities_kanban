@@ -26,7 +26,7 @@
                     <div class="col-xs-12 col-sm-4 label" data-label="">
                         {$MOD.SELECT_FIELD_FROM_STAGES}</div>
                     <div class="col-xs-12 col-sm-8 edit-view-field ">
-                        <select type="text" name="stages_field" class="selectpicker stages_field" data-live-search="true" id="stages_field" data-modulename="{$moduleName}" size="30" maxlength="50" >
+                        <select name="stages_field" class=" stages_field" id="stages_field" data-modulename="{$moduleName}" >
                             {foreach from=$fieldListFromStages[$moduleName] key=stages_field_iterations item=stages_field_field}
                             <option value="{$stages_field_field.name}" {if $stages_field_field.name == $moduleConfigCollection.$moduleName->stages_field } selected="selected"{/if}>{$stages_field_field.LBL}</option>
                             {/foreach}
@@ -48,11 +48,11 @@
             </ul>
             <h3 class="module-title-text">{$MOD.LBL_CUSTOMIZING_HEADER_FIELDS}</h3>
             <ul id="sortable-field" class="sortable-ui sortable-field">
-                {foreach from=$config.mainFields key='rowMainField' item='mainField'}
+                {foreach from=$moduleConfigCollection[$moduleName]->mainFields key='rowMainField' item='mainField'}
                     <li class="ui-state-default"><div><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
                             <input type="hidden" class="sort-position" name="mainFields[{$rowMainField}][sort]" value="{$rowMainField}" id="mainFields[{$rowMainField}][sort]">
                             <select name="mainFields[{$rowMainField}][value]" id="mainFields[{$rowMainField}]">
-                                {foreach from=$optionFields key='optionFieldsName' item='optionFieldsLbl'}
+                                {foreach from=$listFieldsBen[$moduleName] key='optionFieldsName' item='optionFieldsLbl'}
                                     <option value="{$optionFieldsName}" {if $mainField == $optionFieldsName} selected="selected" {/if}>{$optionFieldsLbl}</option>
                                 {/foreach}
                             </select>
@@ -81,6 +81,17 @@
             </div>
             <div class="col-xs-12">
                 <button type="submit">{$MOD.LBL_SAVE}</button>
+            </div>
+            <div class="hidden basik-field">
+                <li class="ui-state-default"><div><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
+                        <input type="hidden" class="sort-position add-sort"  value="" id="">
+                        <select name="mainFields[][value]" class="add-value">
+                            {foreach from=$listFieldsBen[$moduleName] key='optionFieldsName' item='optionFieldsLbl'}
+                                <option value="{$optionFieldsName}" >{$optionFieldsLbl}</option>
+                            {/foreach}
+                        </select>
+                    </div>
+                </li>
             </div>
         </form>
     </div>
@@ -130,17 +141,7 @@
 </div>
 
 
-<div class="hidden" id="basik-field">
-    <li class="ui-state-default"><div><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
-            <input type="hidden" class="sort-position add-sort"  value="" id="">
-            <select name="mainFields[][value]" class="add-value">
-                {foreach from=$optionFields key='optionFieldsName' item='optionFieldsLbl'}
-                    <option value="{$optionFieldsName}" >{$optionFieldsLbl}</option>
-                {/foreach}
-            </select>
-        </div>
-    </li>
-</div>
+
 
 
         <script>
@@ -168,22 +169,23 @@
                 });
                 $( ".sortable" ).disableSelection();
 
-                $('#add_field').click(function () {
-                    add_field_in_list();
+                $('.add_field').click(function () {
+                    add_field_in_list($(this));
                 });
                 $('.remove-button').click(function () {
                     var deleted_el = $(this).parent().parent().parent();
                     deleted_el.remove();
                 })
             } );
-            function add_field_in_list() {
-                var field = $('#basik-field').html();
-                var addNumber = $("#sortable-field .sort-position").length + 1;
-                $("#sortable-field").append(field);
-                $("#sortable-field .add-sort").attr({'name' : 'mainFields[' + addNumber + '][sort]', 'value' : addNumber });
-                $("#sortable-field .add-sort").removeClass('add-sort');
-                $("#sortable-field .add-value").attr({'name' : 'mainFields[' + addNumber + '][value]'});
-                $("#sortable-field .add-value").removeClass('add-value');
+            function add_field_in_list(buttonJqueryClicked) {
+                var form = buttonJqueryClicked.closest(".config_module_form");
+                var field = form.find('.basik-field').html();
+                var addNumber = form.find(".sortable-field .sort-position").length + 1;
+                form.find(".sortable-field").append(field);
+                form.find(".sortable-field .add-sort").attr({'name' : 'mainFields[' + addNumber + '][sort]', 'value' : addNumber });
+                form.find(".sortable-field .add-sort").removeClass('add-sort');
+                form.find(".sortable-field .add-value").attr({'name' : 'mainFields[' + addNumber + '][value]'});
+                form.find(".sortable-field .add-value").removeClass('add-value');
             }
             {/literal}
         </script>

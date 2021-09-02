@@ -30,6 +30,7 @@ class boardSettingsView
         global $app_list_strings;
         global $current_language;
         global $current_user;
+        /* начало нужно переработать */
         $seedBORD = new BOARD_OPPORTUNITIES();
         $seedOpportunity = BeanFactory::newBean('Opportunities');
         $config = $seedBORD->getConfig();
@@ -58,21 +59,28 @@ class boardSettingsView
             $fields[]=$field_arr['name'];
             $option_fields[$field_arr['name']] = $module_strings[$field_arr['vname']];
         }
+        /* конец нужно переработать */
         //start in work
         $BOARD_USER_CONFIG = new \SuiteCRM\Modules\BOARD_OPPORTUNITIES\BOARD_USER_CONFIG($current_user);
         $BOARD_CONFIG = new \SuiteCRM\Modules\BOARD_OPPORTUNITIES\BOARD_CONFIG();
         $moduleListKanban = $BOARD_CONFIG->getModulesList();
         $fieldListFromStages=[];
+        $listFieldsBen = [];
         foreach ($moduleListKanban as $modulename){
             $beanModule = BeanFactory::newBean($modulename);
             $module_labels = return_module_language($current_language, $beanModule->module_dir);
             foreach ($beanModule->field_defs as $field) {
+                $listFieldsBen[$modulename][$field['name']] = $module_labels[$field['vname']];
                 if($field['type'] == 'enum') {
                     $fieldListFromStages[$modulename][$field['name']] = ['name' => $field['name'], 'LBL' => $module_labels[$field['vname']], 'option' =>$field['options']];
                 }
             }
         }
-        //print_array($fieldListFromStages);
+        print_array('$BOARD_USER_CONFIG->moduleConfigCollection');
+        print_array($BOARD_USER_CONFIG->moduleConfigCollection);
+        print_array('$config');
+        print_array($config);
+        $this->ss->assign('listFieldsBen', $listFieldsBen);
         $this->ss->assign('moduleListKanban', $moduleListKanban);
         $this->ss->assign('moduleListKanbanHasConfig', array_keys($BOARD_USER_CONFIG->moduleConfigCollection));
         $this->ss->assign('moduleConfigCollection', $BOARD_USER_CONFIG->moduleConfigCollection);
