@@ -66,11 +66,20 @@ class boardSettingsView
         $moduleListKanban = $BOARD_CONFIG->getModulesList();
         $fieldListFromStages=[];
         $listFieldsBen = [];
+        $orderByFields = [];
         foreach ($moduleListKanban as $modulename){
             $beanModule = BeanFactory::newBean($modulename);
             $module_labels = return_module_language($current_language, $beanModule->module_dir);
             foreach ($beanModule->field_defs as $field) {
                 $listFieldsBen[$modulename][$field['name']] = $module_labels[$field['vname']];
+                if(
+                    (!isset($field['source']) ||
+                        (isset($field['source']) &&
+                            $field['source'] != 'non-db')
+                    )
+                    && !empty($module_labels[$field['vname']])) {
+                    $orderByFields[$modulename][$field['name']] = $module_labels[$field['vname']];
+                }
                 if($field['type'] == 'enum') {
                     $fieldListFromStages[$modulename][$field['name']] = ['name' => $field['name'], 'LBL' => $module_labels[$field['vname']], 'option' =>$field['options']];
                 }
@@ -80,6 +89,9 @@ class boardSettingsView
         print_array($BOARD_USER_CONFIG->moduleConfigCollection);
         print_array('$config');
         print_array($config);
+        print_array('$fieldListFromStages');
+        print_array($fieldListFromStages);
+        $this->ss->assign('orderByFields', $orderByFields);
         $this->ss->assign('listFieldsBen', $listFieldsBen);
         $this->ss->assign('moduleListKanban', $moduleListKanban);
         $this->ss->assign('moduleListKanbanHasConfig', array_keys($BOARD_USER_CONFIG->moduleConfigCollection));

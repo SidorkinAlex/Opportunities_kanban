@@ -84,4 +84,5 @@ $mod_strings = array (
   'LBL_BOARD_COLUMN_HEIGHT' => 'Board column height',
   'LBL_SELECTED_MODULE' => 'Select the modules for which you want to display the kanban board',
   'LBL_SAVE_SETTINGS' => 'the settings are saved',
+  'LBL_ORDER_BY_FIELD' => 'field for sorting in the board cards',
 );

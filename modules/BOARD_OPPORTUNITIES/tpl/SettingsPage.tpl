@@ -37,8 +37,8 @@
             </div>
             <h3 class="module-title-text">{$MOD.LBL_CUSTOMIZING_COLUMNS}</h3>
             <ul id="sortable_{$moduleName}" class="sortable-ui sortable list-items-collection">
-                {foreach from=$config.stages key='rowNumber' item='list'}
-                    <li class="ui-state-default stage-stap-item"><div><span class="ui-icon ui-icon-arrowthick-2-n-s"></span> <b>{$list.lbl}</b>
+                {foreach from=$moduleConfigCollection[$moduleName]->stages key='rowNumber' item='list'}
+                    <li class="ui-state-default stage-stap-item"><div><span class="ui-icon ui-icon-arrowthick-2-n-s"></span> <b>{if $moduleConfigCollection[$moduleName]->stages_field}{assign var="iterationStagesFieldName" value=$moduleConfigCollection[$moduleName]->stages_field} {assign var="optionName" value=$fieldListFromStages[$moduleName][$iterationStagesFieldName].option}{$APP_LIST_STRINGS[$optionName][$list.name]}{/if}</b>
                             <input type="hidden" class="sort-position" name="stage[{$rowNumber}][sortable]" value="{$rowNumber}" id="stage[{$rowNumber}][sortable]">
                             <input type="hidden" name="stage[{$rowNumber}][name]" value="{$list.name}" id="stage[{$rowNumber}][name]">
                             <span>{$MOD.LBL_SHOW}<input type="checkbox" id="stage[{$rowNumber}][display]" name="stage[{$rowNumber}][display]" {if $list.display == true} checked="checked"{/if}></span>
@@ -67,6 +67,21 @@
                 <button type="button" class="add_field" title="" id="add_field">
                     <span class="suitepicon suitepicon-action-plus"></span><span></span>
                 </button>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 edit-view-row-item">
+                    <div class="col-xs-12 col-sm-4 label" data-label="LBL_ORDER_BY_FIELD">
+                        {$MOD.LBL_ORDER_BY_FIELD}</div>
+                    <div class="col-xs-12 col-sm-8 edit-view-field ">
+                        <select type="text" name="order_by_field" id="order_by_field_{$moduleName}"  >
+                            {foreach from=$orderByFields[$moduleName] key='feild_orderby_value' item='feild_orderby_name'}
+                            <option value="{$feild_orderby_value}" {if $feild_orderby_value == $moduleConfigCollection.$moduleName->order_by } selected="selected"{/if}>{$feild_orderby_name}</option>
+                            {/foreach}
+                        </select>
+                    </div>
+                    <!-- [/hide] -->
+                </div>
             </div>
 
             <div>
@@ -101,11 +116,17 @@
 <script>
 
     $(".stages_field").change(function (){
-        var selected_field = $(this).val();
-        var modulename_selected = $(this).data('modulename');
+        update_stage_list_settings($(this))
+    });
+    $(".stages_field").click(function (){
+        update_stage_list_settings($(this))
+    });
+    function update_stage_list_settings(clicked_element){
+        var selected_field = clicked_element.val();
+        var modulename_selected = clicked_element.data('modulename');
         var option_name = fieldListFromStages[modulename_selected][selected_field]['option'];
         var list_stages_collection = app_list_string[option_name];
-        $('.stage-stap-item').remove();
+        clicked_element.find('.stage-stap-item').remove();
         var i=0;
         var li_items = '';
         for (key in list_stages_collection) {
@@ -123,11 +144,10 @@
             console.log(key + " " + list_stages_collection[key]);
             i++;
         }
-        var form = $(this).closest(".config_module_form");
+        var form = clicked_element.closest(".config_module_form");
         console.log(form.attr("class"));
         form.find(".list-items-collection").append(li_items);
-    });
-
+    }
 </script>
 {/literal}
 
@@ -148,8 +168,25 @@
             const app_list_string = {$APP_LIST_STRINGS|@json_encode};
             const fieldListFromStages = {$fieldListFromStages|@json_encode};
             {literal}
-            $(document).ready(function () {
 
+            let collectionforckick = [] ;
+            $(document).ready(function () {
+            $('.list-items-collection').each(function (index, el){
+                console.log('тест проверка значений');
+                console.log($(this).find('.stage-stap-item').length);
+                if($(this).find('.stage-stap-item').length === 0 ){
+                    collectionforckick[collectionforckick.length]=$(this).closest(".config_module_form").find('.stages_field');
+                    console.log($(this).closest(".config_module_form").find('.stages_field'));
+                    setTimeout(function (){
+                        if(collectionforckick.length != 0) {
+                            for (const argumentsKey in collectionforckick) {
+                                collectionforckick[argumentsKey].click();
+                                delete collectionforckick[argumentsKey];
+                            }
+                        }
+                    },10);
+                }
+            })
 
                 var test11 = $( ".sortable" ).sortable({
                     beforeStop: function( event, ui ) {
