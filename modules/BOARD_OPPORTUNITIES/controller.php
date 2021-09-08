@@ -20,25 +20,39 @@ class CustomBOARD_OPPORTUNITIESController extends SugarController
         echo $seedOpp->getCountOpp();
     }
     public function action_saveSattings(){
+        require_once 'modules/BOARD_OPPORTUNITIES/BOARD_USER_CONFIG.php';
         global $current_user;
-        $bordConf=$current_user->getPreference('bordConf');
-        unset($bordConf['stages']);
-        foreach ($_REQUEST['stage'] as $stage){
-            $bordConf['stages'][$stage['sortable']] = array(
-                'name'=> $stage['name'],
-                'display' => !empty($stage['display']) ? true : false ,
-                'show' => !empty($stage['show']) ? true : false ,
-            );
+        //getting dada settings from Selcted module
+        $BoardUserConfig = new \SuiteCRM\Modules\BOARD_OPPORTUNITIES\BOARD_USER_CONFIG($current_user);
+        $BardConfigFromModule = $BoardUserConfig->getConfigFromModule($_REQUEST['config_module_name']);
+        // ubdatting config data from selected module
+        $BardConfigFromModule->stages = $_REQUEST['stage'];
+        $BardConfigFromModule->stages_field =$_REQUEST['stages_field'];
+        $stages = $_REQUEST['stage'];
+        foreach($stages as $i => $field) {
+            if (empty($field['sortable'])){
+                unset($stages[$i]);
+            } else {
+                unset($stages[$i]['sortable']);
+            }
         }
-        ksort($bordConf['stages']);
-        unset($bordConf['mainFields']);
-        foreach ($_REQUEST['mainFields'] as $mainField){
-            $bordConf['mainFields'][$mainField['sort']] = $mainField['value'];
+        $BardConfigFromModule->stages = $stages;
+        $mainFields = $_REQUEST['mainFields'];
+        foreach($mainFields as $i => $field) {
+            if (empty($field['sort'])){
+                unset($mainFields[$i]);
+            } else {
+                unset($mainFields[$i]['sort']);
+            }
         }
-        ksort ($bordConf['mainFields']);
-        $bordConf['kanban']['kanbandragHeight'] = $_REQUEST['kanbandragHeight'];
-        $current_user->setPreference('bordConf',$bordConf);
-        header('Location: index.php?module=BOARD_OPPORTUNITIES&action=boardSettings');
+        $BardConfigFromModule->mainFields = $mainFields;
+        $BardConfigFromModule->order_by = $_REQUEST['order_by_field'];
+        $BardConfigFromModule->kanban = ['kanbandragHeight' => $_REQUEST['kanbandragHeight']];
+        //Saving config
+
+        $BoardUserConfig->saveBardConfigFromModule($_REQUEST['config_module_name'],$BardConfigFromModule);
+
+        header("Location: index.php?module=BOARD_OPPORTUNITIES&action=index&recipient_module={$_REQUEST['config_module_name']}");
 
     }
 

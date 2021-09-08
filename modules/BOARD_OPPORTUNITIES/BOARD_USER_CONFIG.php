@@ -8,9 +8,10 @@ class BOARD_USER_CONFIG
 {
     public array $moduleConfigCollection = [];
     public \User $user;
+    const USER_PREFERENCE_NAME = 'bordConfUser';
     public function __construct(\User $user)
     {
-        $config = unserialize($user->getPreference('bordConfUser'));
+        $config = unserialize($user->getPreference(self::USER_PREFERENCE_NAME));
 
         if(!empty($config) && is_array($config) ){
             $this->moduleConfigCollection = $config;
@@ -36,6 +37,12 @@ class BOARD_USER_CONFIG
     private function saveConfig()
     {
         $this->user->setPreference('bordConfUser',serialize($this->moduleConfigCollection));
+    }
+
+    public function saveBardConfigFromModule(string $config_module_name, ModuleConfig $BardConfigFromModule):void
+    {
+        $this->moduleConfigCollection[$config_module_name] = $BardConfigFromModule;
+        $this->user->setPreference(self::USER_PREFERENCE_NAME,serialize($this->moduleConfigCollection));
     }
 
 }
