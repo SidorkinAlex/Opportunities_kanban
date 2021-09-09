@@ -93,11 +93,17 @@ class BOARD_OPPORTUNITIES extends Basic
         global $app_list_strings;
         $this->checkOrInitBordFonfModule();
         $stages = [];
-        $countStagesInConfig = count($this->bordConfModule->stages);
-        $countStagesInAppList = count($app_list_strings[$this->recipientBean->field_defs[$this->bordConfModule->stages_field]['options']]);
-        if(isset($app_list_strings[$this->recipientBean->field_defs[$this->bordConfModule->stages_field]['options']][''])){
-            $countStagesInAppList--;
+        if(!empty($this->bordConfModule->stages) && !empty($this->bordConfModule->stages_field)) {
+            $countStagesInConfig = count($this->bordConfModule->stages);
+            $countStagesInAppList = count($app_list_strings[$this->recipientBean->field_defs[$this->bordConfModule->stages_field]['options']]);
+            if (isset($app_list_strings[$this->recipientBean->field_defs[$this->bordConfModule->stages_field]['options']][''])) {
+                $countStagesInAppList--;
+            }
+        } else{
+            $countStagesInConfig = 0;
+            $countStagesInAppList = 0;
         }
+
         if (!empty($this->bordConfModule->stages) && $countStagesInConfig == $countStagesInAppList) {
             for ($i = 0; $i < count($this->bordConfModule->stages); $i++) {
                 if($this->bordConfModule->stages[$i]['display']) {
