@@ -49,16 +49,18 @@
             <h3 class="module-title-text">{$MOD.LBL_CUSTOMIZING_HEADER_FIELDS}</h3>
             <ul id="sortable-field" class="sortable-ui sortable-field">
                 {foreach from=$moduleConfigCollection[$moduleName]->mainFields key='rowMainField' item='mainField'}
-                    <li class="ui-state-default"><div><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
-                            <input type="hidden" class="sort-position" name="mainFields[{$rowMainField}][sort]" value="{$rowMainField}" id="mainFields[{$rowMainField}][sort]">
+                    <li class="ui-state-default">
+                        <div><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
+                            <input type="hidden" class="sort-position" name="mainFields[{$rowMainField}][sort]"
+                                   value="{$rowMainField}" id="mainFields[{$rowMainField}][sort]">
                             <select name="mainFields[{$rowMainField}][value]" id="mainFields[{$rowMainField}]">
                                 {foreach from=$listFieldsBen[$moduleName] key='optionFieldsName' item='optionFieldsLbl'}
                                     <option value="{$optionFieldsName}" {if $mainField == $optionFieldsName} selected="selected" {/if}>{$optionFieldsLbl}</option>
                                 {/foreach}
                             </select>
                             <span>
-                    <button type="button" class="remove-button">x</button>
-                </span>
+                                <button type="button" class="remove-button">x</button>
+                             </span>
                         </div>
                     </li>
                 {/foreach}
@@ -126,7 +128,8 @@
         var modulename_selected = clicked_element.data('modulename');
         var option_name = fieldListFromStages[modulename_selected][selected_field]['option'];
         var list_stages_collection = app_list_string[option_name];
-        clicked_element.find('.stage-stap-item').remove();
+        var form = clicked_element.closest(".config_module_form");
+        form.find('.stage-stap-item').remove();
         var i=0;
         var li_items = '';
         for (key in list_stages_collection) {
@@ -144,7 +147,6 @@
             console.log(key + " " + list_stages_collection[key]);
             i++;
         }
-        var form = clicked_element.closest(".config_module_form");
         console.log(form.attr("class"));
         form.find(".list-items-collection").append(li_items);
     }
