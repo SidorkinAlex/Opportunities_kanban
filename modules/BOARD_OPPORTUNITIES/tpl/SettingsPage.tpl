@@ -48,12 +48,29 @@
             </ul>
             <h3 class="module-title-text">{$MOD.LBL_CUSTOMIZING_HEADER_FIELDS}</h3>
             <ul id="sortable-field" class="sortable-ui sortable-field">
-                {foreach from=$moduleConfigCollection[$moduleName]->mainFields key='rowMainField' item='mainField'}
+                {if $moduleConfigCollection[$moduleName]->mainFields}
+                    {foreach from=$moduleConfigCollection[$moduleName]->mainFields key='rowMainField' item='mainField'}
+                        <li class="ui-state-default">
+                            <div><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
+                                <input type="hidden" class="sort-position" name="mainFields[{$rowMainField}][sort]"
+                                       value="{$rowMainField}" id="mainFields[{$rowMainField}][sort]">
+                                <select name="mainFields[{$rowMainField}][value]" id="mainFields[{$rowMainField}]">
+                                    {foreach from=$listFieldsBen[$moduleName] key='optionFieldsName' item='optionFieldsLbl'}
+                                        <option value="{$optionFieldsName}" {if $mainField == $optionFieldsName} selected="selected" {/if}>{$optionFieldsLbl}</option>
+                                    {/foreach}
+                                </select>
+                                <span>
+                                <button type="button" class="remove-button">x</button>
+                             </span>
+                            </div>
+                        </li>
+                    {/foreach}
+                {else}
                     <li class="ui-state-default">
                         <div><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
-                            <input type="hidden" class="sort-position" name="mainFields[{$rowMainField}][sort]"
-                                   value="{$rowMainField}" id="mainFields[{$rowMainField}][sort]">
-                            <select name="mainFields[{$rowMainField}][value]" id="mainFields[{$rowMainField}]">
+                            <input type="hidden" class="sort-position" name="mainFields[0][sort]"
+                                   value="0" id="mainFields[0][sort]">
+                            <select name="mainFields[0][value]" id="mainFields[0]">
                                 {foreach from=$listFieldsBen[$moduleName] key='optionFieldsName' item='optionFieldsLbl'}
                                     <option value="{$optionFieldsName}" {if $mainField == $optionFieldsName} selected="selected" {/if}>{$optionFieldsLbl}</option>
                                 {/foreach}
@@ -63,7 +80,8 @@
                              </span>
                         </div>
                     </li>
-                {/foreach}
+                {/if}
+
             </ul>
             <div>
                 <button type="button" class="add_field" title="" id="add_field">

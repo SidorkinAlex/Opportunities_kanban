@@ -37,12 +37,10 @@ class CustomBOARD_OPPORTUNITIESController extends SugarController
             }
         }
         $BardConfigFromModule->stages = $stages;
-        $mainFields = $_REQUEST['mainFields'];
-        foreach($mainFields as $i => $field) {
-            if (empty($field['sort'])){
-                unset($mainFields[$i]);
-            } else {
-                unset($mainFields[$i]['sort']);
+        $mainFields = [];
+        foreach($_REQUEST['mainFields'] as $i => $field) {
+            if (isset($field['sort'])){
+                $mainFields[]=$field['value'];
             }
         }
         $BardConfigFromModule->mainFields = $mainFields;
