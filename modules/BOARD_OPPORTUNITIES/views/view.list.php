@@ -37,6 +37,7 @@ class BOARD_OPPORTUNITIESViewList extends ViewList
 
             $this->lv->ss->assign("bordConfig", $seedKanbanBoard->bordConfModule->getValueArray());
             $this->lv->ss->assign("countRecord", $countRecord);
+            $this->lv->ss->assign("RECIPIENT_MODULE", $_REQUEST['recipient_module']);
             if (empty($_REQUEST['search_form_only']) || $_REQUEST['search_form_only'] == false) {
                 $this->lv->ss->assign("SEARCH", true);
                 $this->lv->ss->assign('savedSearchData', $this->searchForm->getSavedSearchData());

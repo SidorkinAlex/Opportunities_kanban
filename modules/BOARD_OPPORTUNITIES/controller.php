@@ -10,8 +10,9 @@ class CustomBOARD_OPPORTUNITIESController extends SugarController
 {
     public function action_getData()
     {
-        $seedOpp=new BOARD_OPPORTUNITIES();
-        $data=$seedOpp->getDataOpp($_REQUEST['where']);
+        global $current_user;
+        $kanbanBoard=new BOARD_OPPORTUNITIES();
+        $data=$kanbanBoard->getDataOpp($_REQUEST,nul,null, $current_user);
         echo json_encode($data);
     }
 

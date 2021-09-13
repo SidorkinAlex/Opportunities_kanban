@@ -1,14 +1,7 @@
 <link rel="stylesheet" href="custom/include/lib/jkanban/jkanban.min.css" />
 <script src="custom/include/lib/jkanban/jkanban.min.js"></script>
 <div id="myKanban"></div>
-{*<button id="addDefault">Add "Default" board</button>*}
-{*<br />*}
-{*<button id="addToDo">Add element in "To Do" Board</button>*}
-{*<br />*}
-{*<button id="removeBoard">Remove "Done" Board</button>*}
-{*<br />*}
-{*<button id="removeElement">Remove "My Task Test"</button>*}
-<!-- Большие модальное окно -->
+]
 
 <div id="MyModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -27,15 +20,15 @@
 
 <script>
     {literal}
-//index.php?module=Opportunities&offset=2&noMenu=1609856071013711200&return_module=Opportunities&action=record=73da683f-d986-ea4d-4d25-5f37f15bac71
     function loadmodalbody(id) {
-        $("#iframemodal").attr("src" , 'index.php?module=Opportunities&hiddenMenu=1&action=DetailView&record='+id);
+        $("#iframemodal").attr("src" , 'index.php?module=' + {/literal}'{$RECIPIENT_MODULE}'{literal} + '&hiddenMenu=1&action=DetailView&record='+id);
         var heightWindow = window.innerHeight - 0.1 * window.innerHeight;
         $("#iframemodal").innerHeight(heightWindow);
     }
     {/literal}
     var configBord = {$bordConfig|@json_encode};
     var stages={$STAGES};
+    const RECIPIENT_MODULE='{$RECIPIENT_MODULE}';
     var countRecord={$countRecord};
     {literal}
     var bordsData=[];
@@ -51,11 +44,8 @@
         };
         counter++;
 
-        console.log(stages[key]);
-        console.log(key);
     }
     const bordValue=bordsData;
-    console.log(bordsData);
 
 
     var KanbanTest = new jKanban({
@@ -80,15 +70,13 @@
                     var data = {
                         "action":"save",
                         'id': id,
-                        'sales_stage': newStatus
+                        {/literal}'{$bordConfig.stages_field}'{literal}: newStatus
                     };
-                    ajax_request('index.php?module=Opportunities&action=save&to_pdf=true', 'html', data, 'nohtink');
+                    ajax_request('index.php?module=' + {/literal}'{$RECIPIENT_MODULE}'{literal} + '&action=save&to_pdf=true', 'html', data, 'nohtink');
                 }
             }
         },
         buttonClick: function(el, boardId) {
-            console.log(el);
-            console.log(boardId);
             // create a form to enter element
             var formItem = document.createElement("form");
             formItem.setAttribute("class", "itemform");
@@ -124,28 +112,14 @@
         if(countRecord >= 100  ){
             getDataFromStage();
         }
-//        if(countRecord >= 1000){
-//            getDataFromStageLimit();
-//        }
     });
-//    function getDataFromStageLimit() {
-//        //get 30 first entries
-//        for (index = 0; index < configBord['stages'].length; ++index) {
-//            if(configBord['stages'][index]['show']) {
-//                ajax_request('index.php?module=BOARD_OPPORTUNITIES&action=getData&where[]=' + configBord.stages[index]['name'] + '&to_pdf=true&limitMax=' + configBord['limitIterationITems'], 'JSON', '', 'setItems');
-//                configBord['stages'][index]['loadItems']=configBord['limitIterationITems'];
-//            }
-//        }
-//        //get oеher record
-//        getOthersRecord();
-//
-//    }
+
 
     function getOthersRecord() {
         for (index = 0; index < configBord['stages'].length; ++index) {
             if(configBord['stages'][index]['show']) {
                 var limitMax = configBord['stages'][index]['loadItems'] + configBord['limitIterationITems'];
-                ajax_request('index.php?module=BOARD_OPPORTUNITIES&action=getData&where[]=' + configBord.stages[index]['name'] + '&to_pdf=true&limitMin=' + configBord['stages'][index]['loadItems'] + '&limitMax=' + limitMax, 'JSON', '', 'setItems')
+                ajax_request('index.php?module=BOARD_OPPORTUNITIES&recipient_module=' + RECIPIENT_MODULE + '&action=getData&where[]=' + configBord.stages[index]['name'] + '&to_pdf=true&limitMin=' + configBord['stages'][index]['loadItems'] + '&limitMax=' + limitMax, 'JSON', '', 'setItems')
             }
         }
 
@@ -153,29 +127,22 @@
     function getDataFromStage() {
         for (index = 0; index < configBord['stages'].length; ++index) {
             if(configBord['stages'][index]['show']) {
-                ajax_request('index.php?module=BOARD_OPPORTUNITIES&action=getData&where[]=' + configBord.stages[index]['name'] + '&to_pdf=true', 'JSON', '', 'setItems');
+                ajax_request('index.php?module=BOARD_OPPORTUNITIES&recipient_module=' + RECIPIENT_MODULE + '&action=getData&where[]=' + configBord.stages[index]['name'] + '&to_pdf=true', 'JSON', '', 'setItems');
             }
         }
     }
 
     function getAllStage() {
-        ajax_request('index.php?module=BOARD_OPPORTUNITIES&action=getData&to_pdf=true','JSON','','setItems');
+        ajax_request('index.php?module=BOARD_OPPORTUNITIES&recipient_module=' + RECIPIENT_MODULE + '&action=getData&to_pdf=true','JSON','','setItems');
     }
     function setItems(data) {
-        console.log(data);
         for (var key in data) {
             for (index = 0; index < data[key].length; ++index) {
-                console.log(data[key][index]);
                 KanbanTest.addElement("_" + key.replace(/\s+/g, ''),{
-                    title:"<p>"+data[key][index]['opportunities_name']+"</p>",
+                    title:"<p>"+data[key][index]['beanCardName']+"</p>",
                     idopp:data[key][index]['id'],
                 });
             }
-//            if(typeof configBord['stages'][key]['loadItems'] == "undefined") {
-//                configBord['stages'][key]['loadItems'] = data[key].length;
-//            } else {
-//                configBord['stages'][key]['loadItems'] = configBord['stages'][key]['loadItems'] + data[key].length;
-//            }
         }
 
     }
@@ -189,16 +156,6 @@
                 if(functionName == 'setItems'){
                     setItems(data);
                 }
-//                if(functionName == 'setItemsRecursion'){
-//                    if(data != ''){
-//                        setItems(data);
-//                        params = new URLSearchParams(urlParams);
-//                        console.log(params);
-//                        // формируем новый урл нужный для нас
-//                        //ajax_request с параметрами для самовызова
-//                    }
-//
-//                }
             }
         });
 

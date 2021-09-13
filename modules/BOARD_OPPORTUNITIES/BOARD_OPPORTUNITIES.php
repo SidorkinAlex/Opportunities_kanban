@@ -260,87 +260,85 @@ class BOARD_OPPORTUNITIES extends Basic
      * @param array $whereArr
      * @return array
      */
-    public function getDataOpp($whereArr,$limitMin=null,$limitMax= null){
-
+    public function getDataOpp($request,$limitMin=null,$limitMax= null,User $user){
+        require_once 'modules/BOARD_OPPORTUNITIES/BOARD_USER_CONFIG.php';
+        require_once 'modules/BOARD_OPPORTUNITIES/helpers/BoardConfModuleToBeanRequest.php';
+        $whereArr = $request['where'];
         global $db;
+        if(!empty($request['recipient_module'])) {
 
-        $bordConfig=BOARD_OPPORTUNITIES::getBordConfig();
-        $order_by='date_entered DESC';
-        if($whereArr) {
-            $in = "'" . implode("','",$whereArr) . "'";
-            $where = '(opportunities.sales_stage in (' . $in . '))';
-        } else {
-            $stagesDefault=[];
-            foreach ($bordConfig['stages'] as $v){
-                if($v['show'])
-                    $stagesDefault[]=$v['name'];
-            }
-            $in = "'" . implode("','",$stagesDefault) . "'";
-            $where = '(opportunities.sales_stage in (' . $in . '))';
-        }
-        $LIMIT='';
-        if(!empty($limitMax)){
-            if(!empty($limitMin) ) {
-                $limitDiff=$limitMax - $limitMin;
-                $LIMIT = "LIMIT {$limitMin},{$limitDiff}";
+            $this->setModule($request['recipient_module']);
+            $this->checkOrInitBordFonfModule();
+            $order_by = "{$this->recipientBean->table_name}.{$this->bordConfModule->order_by} DESC";
+
+            $this->checkOrInitBordFonfModule();
+            if ($whereArr) {
+                $in = "'" . implode("','", $whereArr) . "'";
+                $where = "({$this->recipientBean->table_name}.{$this->bordConfModule->stages_field} in (' . $in . '))";
             } else {
-                $LIMIT = "LIMIT {$limitMax}";
+                $stagesDefault = BoardConfModuleToBeanRequest::stages2request($this->bordConfModule->stages);
+                $in = "'" . implode("','", $stagesDefault) . "'";
+                $where = "({$this->recipientBean->table_name}.{$this->bordConfModule->stages_field} in ( {$in} ))";
             }
-        }
-        $filter=array (
-            'sales_stage',
-        );
-        $filter=array_merge($filter,$bordConfig['mainFields']);
-        $params=array (
-            'massupdate' => true,
-            'orderBy' => 'DATE_ENTERED',
-            'overrideOrder' => true,
-            'sortOrder' => 'DESC',
-        );
-        $show_deleted=0;
-        $join_type='';
-        $return_array=true;
-        $singleSelect=true;
-        $ifListForExport=false;
-        $parentbean= new Opportunity();
-        $been= new Opportunity();
-        $create_new_list_query=$been->create_new_list_query(
-            $order_by,
-            $where,
-            $filter,
-            $params,
-            $show_deleted,
-            $join_type,
-            $return_array,
-            $parentbean,
-            $singleSelect,
-            $ifListForExport
-        );
-        //$mainFields= '`opportunities`.' . implode(', " " ,`opportunities`.',$bordConfig['mainFields']);
-        //print_array($create_new_list_query);
-        //$create_new_list_query['select']=' SELECT opportunities.`id` as `opportunities_id`, CONCAT(' . $mainFields . ') as `opportunities_name`, opportunities.`sales_stage` as `opportunities_sales_stage`';
-        //print_array($create_new_list_query['select'] . $create_new_list_query['from'] . $create_new_list_query['where'] . $create_new_list_query['order_by']);
-        $sql=$create_new_list_query['select'] . $create_new_list_query['from'] . $create_new_list_query['where'] . $create_new_list_query['order_by'];
-        $sql=$sql . "\n {$LIMIT}";
-        $result=$db->query($sql,1);
-        $data=[];
-        while ($row = $db->fetchByAssoc($result)) {
-            $name='';
-            foreach ($bordConfig['mainFields'] as $key => $fieldName){
-                if(!empty($row[$fieldName])){
-                    $name .= ' '.$row[$fieldName];
-                }
-                else{
-                    $name.='';
+            $LIMIT = '';
+            if (!empty($limitMax)) {
+                if (!empty($limitMin)) {
+                    $limitDiff = $limitMax - $limitMin;
+                    $LIMIT = "LIMIT {$limitMin},{$limitDiff}";
+                } else {
+                    $LIMIT = "LIMIT {$limitMax}";
                 }
             }
-            $data[$row['sales_stage']][]=[
-                'id' => $row['id'],
-                'opportunities_name' => $name,
-                'opportunities_sales_stage' => $row['sales_stage'],
-            ];
+            $filter = array(
+                $this->bordConfModule->stages_field => true,
+            );
+
+            $filter = array_merge($filter, BoardConfModuleToBeanRequest::mainFields2Filter($this->bordConfModule->mainFields));
+            $params = array(
+//                'massupdate' => true,
+//                'orderBy' => 'DATE_ENTERED',
+//                'overrideOrder' => true,
+//                'sortOrder' => 'DESC',
+            );
+            $show_deleted = 0;
+            $join_type = '';
+            $return_array = true;
+            $singleSelect = true;
+            $ifListForExport = false;
+            $create_new_list_query = $this->recipientBean->create_new_list_query(
+                $order_by,
+                $where,
+                $filter,
+                $params,
+                $show_deleted,
+                $join_type,
+                $return_array,
+                $this->recipientBean,
+                $singleSelect,
+                $ifListForExport
+            );
+
+            $sql = $create_new_list_query['select'] . $create_new_list_query['from'] . $create_new_list_query['where'] . $create_new_list_query['order_by'];
+            $sql = $sql . "\n {$LIMIT}";
+            $result = $db->query($sql, 1);
+            $data = [];
+            while ($row = $db->fetchByAssoc($result)) {
+                $name = '';
+                foreach ($this->bordConfModule->mainFields as $key => $fieldName) {
+                    if (!empty($row[$fieldName])) {
+                        $name .= ' ' . $row[$fieldName];
+                    } else {
+                        $name .= '';
+                    }
+                }
+                $data[$row[$this->bordConfModule->stages_field]][] = [
+                    'id' => $row['id'],
+                    'beanCardName' => $name,
+                    'stage' => $row[$this->bordConfModule->stages_field],
+                ];
+            }
+            return $data;
         }
-        return $data;
     }
 
     /**
