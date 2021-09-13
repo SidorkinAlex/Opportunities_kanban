@@ -37,9 +37,9 @@ $installdefs = array (
         array (
             0 =>
                 array (
-                    'module' => 'BOARD_OPPORTUNITIES',
-                    'class' => 'BOARD_OPPORTUNITIES',
-                    'path' => 'modules/BOARD_OPPORTUNITIES/BOARD_OPPORTUNITIES.php',
+                    'module' => 'BOARD',
+                    'class' => 'BOARD',
+                    'path' => 'modules/BOARD/BOARD.php',
                     'tab' => true,
                 ),
         ),
@@ -59,8 +59,8 @@ $installdefs = array (
                 ),
             1 =>
                 array (
-                    'from' => '<basepath>/SugarModules/modules/BOARD_OPPORTUNITIES',
-                    'to' => 'modules/BOARD_OPPORTUNITIES',
+                    'from' => '<basepath>/SugarModules/modules/BOARD',
+                    'to' => 'modules/BOARD',
                 ),
         ),
     'language' =>

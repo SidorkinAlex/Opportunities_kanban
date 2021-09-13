@@ -38,4 +38,15 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$app_list_strings['moduleList']['BOARD'] = 'Opportunities Board';
+ if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+global $mod_strings, $app_strings, $sugar_config,$current_user;
+ 
+if(is_admin($current_user)){
+    $module_menu[]=array('index.php?module=BOARD&action=boardSettings', $mod_strings['LNK_SETTINGS'], 'Add', 'BOARD');
+}
+if(ACLController::checkAccess('BOARD', 'list', true)){
+    $module_menu[]=array('index.php?module=BOARD&action=index&return_module=BOARD&return_action=DetailView', $mod_strings['LNK_LIST'],'View', 'BOARD');
+}

@@ -7,8 +7,8 @@
  */
 $path_arr_for_build = array(
     1 => array(
-        'from' => 'modules/BOARD_OPPORTUNITIES/',
-        'to' => 'SugarModules/modules/BOARD_OPPORTUNITIES/',
+        'from' => 'modules/BOARD/',
+        'to' => 'SugarModules/modules/BOARD/',
     ),
     2 => array(
         'from' => 'custom/include/lib/jkanban/',

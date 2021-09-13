@@ -8,6 +8,6 @@
 function post_install()
 {
     $cfg = new Configurator();
-    $cfg->config['addAjaxBannedModules'][] = 'BOARD_OPPORTUNITIES';
+    $cfg->config['addAjaxBannedModules'][] = 'BOARD';
     $cfg->saveConfig();
 }

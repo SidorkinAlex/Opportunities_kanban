@@ -5,7 +5,7 @@ $admin_option_defs = array(
             'Administration',
             'LBL_KANBAN_SETTINGS',
             'LBL_KANBAN_SETTINGS_DESCRIPTION',
-            'index.php?module=BOARD_OPPORTUNITIES&action=moduleSettingsViews',
+            'index.php?module=BOARD&action=moduleSettingsViews',
         ),
     ),
 );

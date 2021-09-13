@@ -38,4 +38,15 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$app_list_strings['moduleList']['BOARD'] = 'Opportunities Board';
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+global $app_strings;
+
+$dashletMeta['BOARDDashlet'] = array(
+    'module' => 'BOARD',
+    'title' => translate('LBL_HOMEPAGE_TITLE', 'BOARD'),
+    'description' => 'A customizable view into BOARD',
+    'category' => 'Module Views'
+);
