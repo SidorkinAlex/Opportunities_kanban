@@ -31,7 +31,7 @@ class CustomBOARDController extends SugarController
         $BardConfigFromModule->stages_field =$_REQUEST['stages_field'];
         $stages = $_REQUEST['stage'];
         foreach($stages as $i => $field) {
-            if (empty($field['sortable'])){
+            if (!isset($field['sortable'])){
                 unset($stages[$i]);
             } else {
                 unset($stages[$i]['sortable']);
