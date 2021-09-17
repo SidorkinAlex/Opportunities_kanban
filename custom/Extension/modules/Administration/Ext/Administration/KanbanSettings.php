@@ -6,6 +6,7 @@ $admin_option_defs = array(
             'LBL_KANBAN_SETTINGS',
             'LBL_KANBAN_SETTINGS_DESCRIPTION',
             'index.php?module=BOARD&action=moduleSettingsViews',
+            'kanban-board'
         ),
     ),
 );
