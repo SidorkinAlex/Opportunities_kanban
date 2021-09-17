@@ -38,4 +38,4 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$app_list_strings['moduleList']['BOARD'] = 'Opportunities Board';
+$app_list_strings['moduleList']['BOARD'] = 'Kanban Board';

@@ -32,7 +32,7 @@ Click the install button.
 
 
 ## Setting
-After installing the package, go to the Opportunities Board module
+After installing the package, go to the Kanban Board module
 
 we get to the Kanban board settings page
 ![settings page](http://web-seedteam.ru/wp-content/uploads/2020/12/%D0%A1%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0-%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA-1024x479.png)
@@ -83,7 +83,7 @@ MIT
 Нажать кнопку установить.
 
 ## Натройка
-После установки пакета переходим в модуль Opportunities Board
+После установки пакета переходим в модуль Kanban Board
 
 попадаем на станицу настройки канбан доски
 ![страница ннастройки](http://web-seedteam.ru/wp-content/uploads/2020/12/%D0%A1%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0-%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA-1024x479.png)
