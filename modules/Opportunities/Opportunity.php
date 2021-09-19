@@ -359,7 +359,7 @@ class Opportunity extends SugarBean
 
     public function save($check_notify = false)
     {
-        print_array($_REQUEST,0,1);
+
         // Bug 32581 - Make sure the currency_id is set to something
         global $current_user, $app_list_strings;
 
