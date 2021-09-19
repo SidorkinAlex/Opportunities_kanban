@@ -10,9 +10,9 @@ if (!function_exists('print_array')) {
     {
         if($in_file) ob_start();
 
-        if (!$in_file) echo '<pre>';
+        if (!$in_file) echo "\n";
         print_r($var);
-        if (!$in_file) echo '</pre>' . "\n";
+        if (!$in_file) echo "\n";
         if ($in_file) $content = ob_get_contents();
 
         if(isset($GLOBALS['print_array_filename']) AND $GLOBALS['print_array_filename'] != '') {
