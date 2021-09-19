@@ -85,12 +85,7 @@ class boardSettingsView
                 }
             }
         }
-        print_array('$BOARD_USER_CONFIG->moduleConfigCollection');
-        print_array($BOARD_USER_CONFIG->moduleConfigCollection);
-        print_array('$config');
-        print_array($config);
-        print_array('$fieldListFromStages');
-        print_array($fieldListFromStages);
+
         $this->ss->assign('orderByFields', $orderByFields);
         $this->ss->assign('listFieldsBen', $listFieldsBen);
         $this->ss->assign('moduleListKanban', $moduleListKanban);

@@ -38,7 +38,8 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
+require_once 'modules/BOARD/BOARD_USER_CONFIG.php';
+require_once 'modules/BOARD/ModuleConfig.php';
 class BOARD extends Basic
 {
     public $new_schema = true;
