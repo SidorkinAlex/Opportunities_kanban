@@ -31,6 +31,7 @@ Download package archive
 
 Click the install button.
 
+**After installation, you need to make a Quick Repair and Rebuild (Admin -> Repair ->Quick Repair and Rebuild)**
 
 ## Setting
 
@@ -106,6 +107,8 @@ MIT
 Загрузить архив с пакетом
 
 Нажать кнопку установить.
+
+**После установки вам необходимо выполнить быстрое Восстановление (Администратор -> Ремонт ->Быстрый ремонт и перестройка)**
 
 ## Настройка
 После установки пакета переходим в Администрирование -> Configuring Modules for which a kanban board is available
