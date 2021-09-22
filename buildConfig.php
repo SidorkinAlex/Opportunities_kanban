@@ -7,8 +7,8 @@
  */
 $path_arr_for_build = array(
     1 => array(
-        'from' => 'modules/BOARD_OPPORTUNITIES/',
-        'to' => 'SugarModules/modules/BOARD_OPPORTUNITIES/',
+        'from' => 'modules/BOARD/',
+        'to' => 'SugarModules/modules/BOARD/',
     ),
     2 => array(
         'from' => 'custom/include/lib/jkanban/',
@@ -37,6 +37,22 @@ $path_arr_for_build = array(
     8 => array(
         'from' => 'manifest.php',
         'to' => 'manifest.php',
+    ),
+    9 => array(
+        'from' => 'custom/Extension/modules/Administration/Ext',
+        'to' => 'SugarModules/custom/Extension/modules/Administration/Ext',
+    ),
+    10 => array(
+        'from' => 'custom/include/lib/bootstrap_select',
+        'to' => 'SugarModules/custom/include/lib/bootstrap_select/',
+    ),
+    11 => array(
+        'from' => 'custom/Extension/application/Ext/LogicHooks/BOARD_Kanban_Board_JS_UI_HOOK.php',
+        'to' => 'SugarModules/custom/Extension/application/Ext/LogicHooks/BOARD_Kanban_Board_JS_UI_HOOK.php',
+    ),
+    12 => array(
+        'from' => 'custom/include/language/en_us.lang.php',
+        'to' => 'SugarModules/custom/include/language/en_us.lang.php',
     ),
 );
 

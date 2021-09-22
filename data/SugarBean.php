@@ -3520,18 +3520,6 @@ class SugarBean
         $singleSelect = false,
         $ifListForExport = false
     ) {
-        if(!empty($_REQUEST['create_new_list_query'])) {
-            print_array('$order_by=' . var_export($order_by, 1));
-            print_array('$where=' . var_export($where, 1));
-            print_array('$filter=' . var_export($filter, 1));
-            print_array('$params=' . var_export($params, 1));
-            print_array('$show_deleted=' . var_export($show_deleted, 1));
-            print_array('$join_type=' . var_export($join_type, 1));
-            print_array('$return_array=' . var_export($return_array, 1));
-            print_array('$parentbean=' . var_export($parentbean, 1));
-            print_array('$singleSelect=' . var_export($singleSelect, 1));
-            print_array('$ifListForExport=' . var_export($ifListForExport, 1));
-        }
         $selectedFields = array();
         $secondarySelectedFields = array();
         $ret_array = array();
