@@ -272,7 +272,7 @@ class BOARD extends Basic
             $this->checkOrInitBordFonfModule();
             if ($whereArr) {
                 $in = "'" . implode("','", $whereArr) . "'";
-                $where = "({$this->recipientBean->table_name}.{$this->bordConfModule->stages_field} in (' . $in . '))";
+                $where = "({$this->recipientBean->table_name}.{$this->bordConfModule->stages_field} in ( {$in} ))";
             } else {
                 $stagesDefault = BoardConfModuleToBeanRequest::stages2request($this->bordConfModule->stages);
                 $in = "'" . implode("','", $stagesDefault) . "'";

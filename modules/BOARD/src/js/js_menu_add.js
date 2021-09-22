@@ -33,14 +33,16 @@ $(document).ready(function () {
 });
 
 function show_button(params,buttonName){
-    $('#actionMenuSidebar ul').append("<li class=\"actionmenulinks\" role=\"presentation\">\n" +
-        "                                                <a href=\"index.php?module=BOARD&amp;action=index&amp;recipient_module=" + params.module + "&amp;\" data-action-name=\"BOARD\">\n" +
-        "                                                    <div class=\"side-bar-action-icon\">\n" +
-        "                                                        <span class=\"suitepicon suitepicon-action-vcard\"></span>\n" +
-        "                                                    </div>\n" +
-        "                                                    <div class=\"actionmenulink\">" + buttonName + "</div>\n" +
-        "                                                </a>\n" +
-        "                                            </li>");
+    if(!$('#actionMenuSidebar ul li').is('.kanban-button')) {
+        $('#actionMenuSidebar ul').append("<li class=\"actionmenulinks kanban-button\" role=\"presentation\">\n" +
+            "                                                <a href=\"index.php?module=BOARD&amp;action=index&amp;recipient_module=" + params.module + "&amp;\" data-action-name=\"BOARD\">\n" +
+            "                                                    <div class=\"side-bar-action-icon\">\n" +
+            "                                                        <span class=\"suitepicon suitepicon-action-vcard\"></span>\n" +
+            "                                                    </div>\n" +
+            "                                                    <div class=\"actionmenulink\">" + buttonName + "</div>\n" +
+            "                                                </a>\n" +
+            "                                            </li>");
+    }
 }
 
 function getAllUrlParams(url) {
