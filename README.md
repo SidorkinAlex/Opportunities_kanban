@@ -23,7 +23,7 @@ https://github.com/users/SidorkinAlex/projects/1
 
 Before installation, you must make a backup copy of the system files!
 
-To install, you need to download the latest version of the plugin from the link https://github.com/SidorkinAlex/Opportunities_kanban/releases/download/2.0.0/Build_2_0_0.zip
+To install, you need to download the latest version of the plugin from the link https://github.com/SidorkinAlex/Opportunities_kanban/releases/download/2.0.1/Build_2_0_1.zip
 
 Then in SuiteCRM open the Module Loader (Administration -> Module Loader)
 
@@ -100,7 +100,7 @@ MIT
 
 Перед установкой необходимо сделать резервную копию файлов системы!
 
-Для установки необходимо скачать последную версию плагина по ссылке https://github.com/SidorkinAlex/Opportunities_kanban/releases/download/2.0.0/Build_2_0_0.zip
+Для установки необходимо скачать последную версию плагина по ссылке https://github.com/SidorkinAlex/Opportunities_kanban/releases/download/2.0.1/Build_2_0_1.zip
 
 Далее в SuiteCRM открыть Загрузчик модулей (Администрирование -> Загрузчик модулей)
 
