@@ -35,12 +35,14 @@ class boardSettingsView
         $seedOpportunity = BeanFactory::newBean('Opportunities');
         $config = $seedBORD->getConfig();
         $list=$app_list_strings[$seedOpportunity->field_name_map['sales_stage']['options']];
-        foreach ($config['stages'] as $row => $val_arr ){
-            if(isset($list[$val_arr['name']])) {
-                $config['stages'][$row]['lbl'] = $app_list_strings[$seedOpportunity->field_name_map['sales_stage']['options']][$val_arr['name']];
-                unset($list[$val_arr['name']]);
-            } else {
-                unset($config['stages'][$row]);
+        if(!empty($config['stages'])) {
+            foreach ($config['stages'] as $row => $val_arr) {
+                if (isset($list[$val_arr['name']])) {
+                    $config['stages'][$row]['lbl'] = $app_list_strings[$seedOpportunity->field_name_map['sales_stage']['options']][$val_arr['name']];
+                    unset($list[$val_arr['name']]);
+                } else {
+                    unset($config['stages'][$row]);
+                }
             }
         }
         foreach ($list as $name => $val){
@@ -57,7 +59,7 @@ class boardSettingsView
                 continue;
             }
             $fields[]=$field_arr['name'];
-            $option_fields[$field_arr['name']] = $module_strings[$field_arr['vname']];
+            $option_fields[$field_arr['name']] = isset($module_strings[$field_arr['vname']]) ? $module_strings[$field_arr['vname']] : '';
         }
         /* конец нужно переработать */
         //start in work
@@ -71,7 +73,7 @@ class boardSettingsView
             $beanModule = BeanFactory::newBean($modulename);
             $module_labels = return_module_language($current_language, $beanModule->module_dir);
             foreach ($beanModule->field_defs as $field) {
-                $listFieldsBen[$modulename][$field['name']] = $module_labels[$field['vname']];
+                $listFieldsBen[$modulename][$field['name']] = isset($module_labels[$field['vname']]) ? $module_labels[$field['vname']] : '';
                 if(
                     (!isset($field['source']) ||
                         (isset($field['source']) &&
@@ -81,17 +83,18 @@ class boardSettingsView
                     $orderByFields[$modulename][$field['name']] = $module_labels[$field['vname']];
                 }
                 if($field['type'] == 'enum') {
-                    $fieldListFromStages[$modulename][$field['name']] = ['name' => $field['name'], 'LBL' => $module_labels[$field['vname']], 'option' =>$field['options']];
+                    $field_lbl = isset($module_labels[$field['vname']]) ? $module_labels[$field['vname']] : "";
+                    $fieldListFromStages[$modulename][$field['name']] = ['name' => $field['name'], 'LBL' => $field_lbl, 'option' =>$field['options']];
                 }
             }
         }
-
+        $recipient_module = isset($_REQUEST['recipient_module'])? $_REQUEST['recipient_module'] : '';
         $this->ss->assign('orderByFields', $orderByFields);
         $this->ss->assign('listFieldsBen', $listFieldsBen);
         $this->ss->assign('moduleListKanban', $moduleListKanban);
         $this->ss->assign('moduleListKanbanHasConfig', array_keys($BOARD_USER_CONFIG->moduleConfigCollection));
         $this->ss->assign('moduleConfigCollection', $BOARD_USER_CONFIG->moduleConfigCollection);
-        $this->ss->assign('activeModule', $_REQUEST['recipient_module']);
+        $this->ss->assign('activeModule', $recipient_module);
         $this->ss->assign('fieldListFromStages', $fieldListFromStages);
         $this->ss->assign('optionFields', $option_fields);
         //end in work

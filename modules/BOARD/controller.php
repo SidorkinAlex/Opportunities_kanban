@@ -12,7 +12,7 @@ class CustomBOARDController extends SugarController
     {
         global $current_user;
         $kanbanBoard=new BOARD();
-        $data=$kanbanBoard->getDataOpp($_REQUEST,nul,null, $current_user);
+        $data=$kanbanBoard->getDataOpp($_REQUEST,null,null, $current_user);
         echo json_encode($data);
     }
 

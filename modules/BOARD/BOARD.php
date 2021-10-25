@@ -175,7 +175,7 @@ class BOARD extends Basic
             $return_array = true;
             $singleSelect = true;
             $ifListForExport = false;
-
+            $where='';
 
             $create_new_list_query = $this->recipientBean->create_new_list_query(
                 $order_by,
@@ -261,7 +261,7 @@ class BOARD extends Basic
     public function getDataOpp($request,$limitMin=null,$limitMax= null,User $user){
         require_once 'modules/BOARD/BOARD_USER_CONFIG.php';
         require_once 'modules/BOARD/helpers/BoardConfModuleToBeanRequest.php';
-        $whereArr = $request['where'];
+        $whereArr = isset($request['where']) ? $request['where'] : [];
         global $db;
         if(!empty($request['recipient_module'])) {
 
